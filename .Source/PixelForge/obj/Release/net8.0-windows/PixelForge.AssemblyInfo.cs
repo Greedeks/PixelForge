@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PixelForge")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5d0aa865af6c55a989863df28313f76364512ffa")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+38e371ed173ca31295e7499a494fde79cefa73fa")]
 [assembly: System.Reflection.AssemblyProductAttribute("PixelForge")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PixelForge")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
