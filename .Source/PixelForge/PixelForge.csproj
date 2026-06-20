@@ -1,17 +1,31 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
+ <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows7.0</TargetFramework>
+    <UseWPF>true</UseWPF>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UseWPF>true</UseWPF>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AssemblyName>PixelForge</AssemblyName>
+    <RootNamespace>PixelForge</RootNamespace>
+    <Title>PixelForge</Title>
+    <Product>PixelForge</Product>
+    <Company>Greedeks</Company>
+    <Authors>Greedeks</Authors>
+    <Copyright>© Greedeks</Copyright>
+    <Version>1.0.0</Version>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <InformationalVersion>1.0.0</InformationalVersion>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/Greedeks/PixelForge</RepositoryUrl>
+    <StartupObject>PixelForge.App</StartupObject>
     <ApplicationIcon>PixelForge.ico</ApplicationIcon>
-    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-    <SignAssembly>False</SignAssembly>
-    <Company></Company>
-    <Authors></Authors>
+    <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
+    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
   </PropertyGroup>
+
 
   <ItemGroup>
     <EditorConfigFiles Remove="D:\PixelForge\.Source\PixelForge\.editorconfig" />
@@ -27,6 +41,21 @@
 
   <ItemGroup>
     <Folder Include="Core\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 
 </Project>

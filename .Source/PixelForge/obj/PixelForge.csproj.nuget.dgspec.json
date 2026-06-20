@@ -22,16 +22,16 @@
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net8.0-windows"
+          "net8.0-windows7.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net8.0-windows": {
+          "net8.0-windows7.0": {
             "framework": "net8.0-windows7.0",
-            "targetAlias": "net8.0-windows",
+            "targetAlias": "net8.0-windows7.0",
             "projectReferences": {}
           }
         },
@@ -48,9 +48,9 @@
         "SdkAnalysisLevel": "10.0.200"
       },
       "frameworks": {
-        "net8.0-windows": {
+        "net8.0-windows7.0": {
           "framework": "net8.0-windows7.0",
-          "targetAlias": "net8.0-windows",
+          "targetAlias": "net8.0-windows7.0",
           "imports": [
             "net461",
             "net462",
