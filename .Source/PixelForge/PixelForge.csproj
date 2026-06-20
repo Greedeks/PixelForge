@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>PixelForge.ico</ApplicationIcon>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <SignAssembly>False</SignAssembly>
+    <Company></Company>
+    <Authors></Authors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EditorConfigFiles Remove="D:\PixelForge\.Source\PixelForge\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="PixelForge.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="D:\PixelForge\.Source\PixelForge\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Core\" />
+  </ItemGroup>
+
+</Project>
