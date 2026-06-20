@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="_Слой_1" data-name="Слой_1" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512">
+  <!-- Generator: Adobe Illustrator 30.0.0, SVG Export Plug-In . SVG Version: 2.1.1 Build 123)  -->
+  <defs>
+    <style>
+      .st0 {
+        opacity: .55;
+      }
+
+      .st0, .st1, .st2 {
+        fill: #fff;
+      }
+
+      .st0, .st2, .st3 {
+        isolation: isolate;
+      }
+
+      .st4, .st3 {
+        fill: none;
+      }
+
+      .st2 {
+        opacity: .78;
+      }
+
+      .st5 {
+        fill: url(#grid);
+      }
+
+      .st3 {
+        opacity: .16;
+        stroke: #fff;
+        stroke-width: .5px;
+      }
+
+      .st6 {
+        fill: url(#_Безымянный_градиент_2);
+      }
+
+      .st7 {
+        clip-path: url(#clippath);
+      }
+
+      .st8 {
+        fill: url(#_Безымянный_градиент_6);
+      }
+    </style>
+    <clipPath id="clippath">
+      <rect class="st4" x="20.14" y="20.14" width="471.71" height="471.71" rx="94.34" ry="94.34"/>
+    </clipPath>
+    <linearGradient id="_Безымянный_градиент_6" data-name="Безымянный градиент 6" x1="-700.02" y1="795.77" x2="-698.05" y2="793.8" gradientTransform="translate(168025 191005) scale(240 -240)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#9b7bff"/>
+      <stop offset=".5" stop-color="#7d6fff"/>
+      <stop offset="1" stop-color="#5b3fd6"/>
+    </linearGradient>
+    <pattern id="grid" x="0" y="0" width="16" height="16" patternTransform="translate(15 -14779) scale(1 -1)" patternUnits="userSpaceOnUse" viewBox="0 0 16 16">
+      <g>
+        <rect class="st4" width="16" height="16"/>
+        <path class="st3" d="M0,16h16V0"/>
+      </g>
+    </pattern>
+    <linearGradient id="_Безымянный_градиент_2" data-name="Безымянный градиент 2" x1="-699.04" y1="794.54" x2="-699.04" y2="792.58" gradientTransform="translate(168025 95365) scale(240 -120)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff" stop-opacity=".16"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <g class="st7">
+    <g>
+      <rect class="st8" x="20.14" y="20.14" width="471.71" height="471.71"/>
+      <rect class="st5" x="20.14" y="20.14" width="471.71" height="471.71"/>
+      <rect class="st6" x="20.14" y="20.14" width="471.71" height="235.86"/>
+    </g>
+  </g>
+  <rect class="st1" x="329.32" y="62.67" width="31.45" height="233.7" rx="6" ry="6" transform="translate(43.02 424.59) rotate(-66.54)"/>
+  <rect class="st1" x="159.32" y="101.5" width="149.38" height="51.1" rx="8" ry="8" transform="translate(24.3 291.15) rotate(-66.54)"/>
+  <rect class="st0" x="138.07" y="224.55" width="235.86" height="51.1" rx="7" ry="7"/>
+  <rect class="st2" x="165.59" y="291.38" width="180.82" height="51.1" rx="7" ry="7"/>
+  <rect class="st1" x="193.1" y="358.2" width="125.79" height="51.1" rx="7" ry="7"/>
+</svg>
