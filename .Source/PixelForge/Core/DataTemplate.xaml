@@ -1,0 +1,18 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:vm="clr-namespace:PixelForge.Core.ViewModel"
+                    xmlns:view="clr-namespace:PixelForge.View">
+
+    <DataTemplate DataType="{x:Type vm:OptimizerViewModel}">
+        <view:OptimizerView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:SvgToXamlViewModel}">
+        <view:SvgToXamlView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:SettingsViewModel}">
+        <view:SettingsView />
+    </DataTemplate>
+
+</ResourceDictionary>

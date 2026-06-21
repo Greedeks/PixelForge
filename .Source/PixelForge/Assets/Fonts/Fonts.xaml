@@ -1,0 +1,7 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+
+    <FontFamily x:Key="AA Stetica">/Assets/Fonts/AA Stetica Regular.ttf#AA Stetica</FontFamily>
+
+</ResourceDictionary>

@@ -4,11 +4,84 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:interop="clr-namespace:PixelForge.Helpers.Interop"
+        xmlns:vm="clr-namespace:PixelForge.Core.ViewModel"
         xmlns:local="clr-namespace:PixelForge"
-        mc:Ignorable="d" Background="{StaticResource Background}" BorderBrush="{StaticResource Border_Default}" BorderThickness="1"
-        interop:WindowAttributes.CaptionColor="{StaticResource Background}"
-        Title="PixelForge" Height="450" Width="800">
+        mc:Ignorable="d" Background="{StaticResource Background_Main}" BorderBrush="{StaticResource Border_Default}" BorderThickness="1"
+        interop:WindowAttributes.CaptionColor="{StaticResource Background_Page}" FontFamily="{StaticResource AA Stetica}"
+        Title="PixelForge" Height="450" Width="800" IsTabStop="False" KeyboardNavigation.TabNavigation="None" FocusVisualStyle="{x:Null}" SnapsToDevicePixels="True" UseLayoutRounding="True">
+    <Window.DataContext>
+        <vm:MainViewModel/>
+    </Window.DataContext>
+    
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
+        <Border Grid.Column="0" Background="{StaticResource Background_Sidebar}" BorderBrush="{StaticResource Border_Default}" BorderThickness="0,0,1,0" Width="Auto">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" Margin="8,10,8,6">
+
+                    <RadioButton Style="{StaticResource RbtnNavigation}" IsChecked="True" Command="{Binding NavigateToOptimizerCommand}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Rectangle Grid.Column="0" Width="15" Height="15" Margin="0,0,9,0" Fill="{Binding RelativeSource={RelativeSource AncestorType=RadioButton}, Path=Foreground}">
+                                <Rectangle.OpacityMask>
+                                    <ImageBrush ImageSource="{StaticResource Icon_Pictures}" Stretch="Uniform"/>
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                            <TextBlock Grid.Column="1" Text="{StaticResource rbtn_Optimizer}" FontSize="14" VerticalAlignment="Center"/>
+                        </Grid>
+                    </RadioButton>
+
+                    <Rectangle Height="1" Fill="{StaticResource Border_Default}" Margin="10,2"/>
+
+                    <RadioButton Style="{StaticResource RbtnNavigation}" Command="{Binding NavigateToSvgToXamlCommand}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Rectangle Grid.Column="0" Width="15" Height="15" Margin="0,0,9,0" Fill="{Binding RelativeSource={RelativeSource AncestorType=RadioButton}, Path=Foreground}">
+                                <Rectangle.OpacityMask>
+                                    <ImageBrush ImageSource="{StaticResource Icon_Transformation}" Stretch="Uniform"/>
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                            <TextBlock Grid.Column="1" Text="{StaticResource rbtn_SvgToXaml}" FontSize="14" VerticalAlignment="Center"/>
+                        </Grid>
+                    </RadioButton>
+
+                    <Rectangle Height="1" Fill="{StaticResource Border_Default}" Margin="10,2"/>
+
+                    <RadioButton Style="{StaticResource RbtnNavigation}" Command="{Binding NavigateToSettingsCommand}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Rectangle Grid.Column="0" Width="15" Height="15" Margin="0,0,9,0" Fill="{Binding RelativeSource={RelativeSource AncestorType=RadioButton}, Path=Foreground}">
+                                <Rectangle.OpacityMask>
+                                    <ImageBrush ImageSource="{StaticResource Icon_Hammer}" Stretch="Uniform"/>
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                            <TextBlock Grid.Column="1" Text="{StaticResource rbtn_Settings}" FontSize="14" VerticalAlignment="Center"/>
+                        </Grid>
+                    </RadioButton>
+
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <ContentControl Grid.Column="1" Content="{Binding CurrentView}" IsTabStop="False" KeyboardNavigation.TabNavigation="None"/>
     </Grid>
 </Window>

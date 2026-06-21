@@ -1,0 +1,9 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:v="clr-namespace:System;assembly=mscorlib">
+
+    <v:String x:Key="rbtn_Optimizer">Optimizer</v:String>
+    <v:String x:Key="rbtn_SvgToXaml">SVG to XAML</v:String>
+    <v:String x:Key="rbtn_Settings">Settings</v:String>
+
+</ResourceDictionary>

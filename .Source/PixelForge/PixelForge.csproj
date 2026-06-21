@@ -31,6 +31,11 @@
     <EditorConfigFiles Remove="D:\PixelForge\.Source\PixelForge\.editorconfig" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <None Remove="Assets\Fonts\AA Stetica Regular.ttf" />
+  </ItemGroup>
+
   <ItemGroup>
     <Content Include="PixelForge.ico" />
   </ItemGroup>
@@ -40,22 +45,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Core\" />
+    <PackageReference Include="Costura.Fody" Version="6.2.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Properties\Settings.Designer.cs">
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
+    <Resource Include="Assets\Fonts\AA Stetica Regular.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>

@@ -1,8 +1,23 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <SolidColorBrush x:Key="Background" Color="#0A0A0A"/>
+    <SolidColorBrush x:Key="Accent_Text" Color="#A29BFE"/>
+    <SolidColorBrush x:Key="Inactive_Text" Color="#666666"/>
+    <SolidColorBrush x:Key="Primary_Accent_Text" Color="#DCD7FF"/>
+    <SolidColorBrush x:Key="Secondary_Accent_Text" Color="#C8E6D8"/>
+    
+    <SolidColorBrush x:Key="Background_Page" Color="#0A0A0A"/>
+    <SolidColorBrush x:Key="Background_Main" Color="#111111"/>
+    <SolidColorBrush x:Key="Background_Sidebar"   Color="#0D0D0D"/>
+    <SolidColorBrush x:Key="Background_Hover"     Color="#141414"/>
+    <SolidColorBrush x:Key="Background_NavActive" Color="#1E1A2E"/>
+
+    <SolidColorBrush x:Key="Accent_Primary" Color="#6C5CE7"/>
+    <SolidColorBrush x:Key="Accent_Secondary" Color="#162a20"/>
+    <SolidColorBrush x:Key="Accent_Hover_Primary" Color="#7D6FF0"/>
+    <SolidColorBrush x:Key="Accent_Hover_Secondary" Color="#1e3a28"/>
 
     <SolidColorBrush x:Key="Border_Default" Color="#1E1E1E"/>
+
 
 </ResourceDictionary>
