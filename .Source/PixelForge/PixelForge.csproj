@@ -24,13 +24,17 @@
     <ApplicationIcon>PixelForge.ico</ApplicationIcon>
     <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
     <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+    <UseWindowsForms>False</UseWindowsForms>
   </PropertyGroup>
-
+  
+  <PropertyGroup>
+    <PublishSingleFile>true</PublishSingleFile>
+    <SelfContained>false</SelfContained>
+  </PropertyGroup>
 
   <ItemGroup>
     <EditorConfigFiles Remove="D:\PixelForge\.Source\PixelForge\.editorconfig" />
   </ItemGroup>
-
 
   <ItemGroup>
     <None Remove="Assets\Fonts\AA Stetica Regular.ttf" />
@@ -45,10 +49,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Costura.Fody" Version="6.2.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+    <PackageReference Include="Ookii.Dialogs.Wpf" Version="5.0.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -56,5 +57,9 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="dotnet publish -c Release" />
+  </Target>
 
 </Project>

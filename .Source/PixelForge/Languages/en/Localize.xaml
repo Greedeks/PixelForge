@@ -5,5 +5,12 @@
     <v:String x:Key="rbtn_Optimizer">Optimizer</v:String>
     <v:String x:Key="rbtn_SvgToXaml">SVG to XAML</v:String>
     <v:String x:Key="rbtn_Settings">Settings</v:String>
-
+    <v:String x:Key="rbtn_NextToOriginal">Folder next to original</v:String>
+    <v:String x:Key="rbtn_CustomFolder">Selected folder</v:String>
+    <v:String x:Key="rbtn_OverwriteOriginal">Replace original</v:String>
+    
+    <v:String x:Key="title_OutputFolder">Output Folder</v:String>
+    <v:String x:Key="link_ChangeFolder">Change...</v:String>
+    <v:String x:Key="desc_OverwriteOriginal">The file on disk will be overwritten. This action cannot be undone.</v:String>
+    
 </ResourceDictionary>

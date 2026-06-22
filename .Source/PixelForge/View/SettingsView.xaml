@@ -3,10 +3,77 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:uc="clr-namespace:PixelForge.Assets.UserControls"
+             xmlns:vm="clr-namespace:PixelForge.Core.ViewModel"
              xmlns:local="clr-namespace:PixelForge.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.DataContext>
+        <vm:SettingsViewModel/>
+    </UserControl.DataContext>
     <Grid>
-            
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <uc:FlowPanel Orientation="Vertical" HorizontalAlignment="Stretch" ContentAlignment="Stretch" Margin="5">
+                
+                <Grid>
+                    <Border CornerRadius="8" Opacity="0.5" Background="{StaticResource Brush_ShadowOverlay}" IsHitTestVisible="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <Border.RenderTransform>
+                            <TranslateTransform X="3" Y="6" />
+                        </Border.RenderTransform>
+                    </Border>
+
+                    <Border Background="{StaticResource Background_Card}" BorderBrush="{StaticResource Border_Default}" BorderThickness="1" CornerRadius="8" Padding="16">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                                <Image Height="20" Width="20">
+                                    <Image.Style>
+                                        <Style TargetType="{x:Type Image}">
+                                            <Setter Property="Source" Value="{StaticResource Icon_Folder}"/>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                                <TextBlock Text="{DynamicResource title_OutputFolder}" Margin="8,0,0,0" Foreground="{StaticResource Primary_Accent_Text}" FontSize="14" FontWeight="Medium" VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <Rectangle Height="1" Fill="{StaticResource Border_Default}" Margin="0,0,0,16"/>
+
+                            <StackPanel>
+                                <RadioButton IsChecked="{Binding IsNextToOriginal, Mode=TwoWay}" GroupName="OutputFolderGroup">
+                                    <StackPanel>
+                                        <WrapPanel>
+                                            <TextBlock Text="{DynamicResource rbtn_NextToOriginal}" Foreground="{StaticResource Primary_Accent_Text}"/>
+                                        </WrapPanel>
+                                        <TextBlock Text="...\compressed\" Foreground="{StaticResource Inactive_Text}" FontSize="12" Margin="0,2,0,0"/>
+                                    </StackPanel>
+                                </RadioButton>
+
+                                <RadioButton  IsChecked="{Binding IsCustomFolder, Mode=TwoWay}" GroupName="OutputFolderGroup" Margin="0,12,0,0">
+                                    <StackPanel>
+                                        <TextBlock Text="{DynamicResource rbtn_CustomFolder}" Foreground="{StaticResource Primary_Accent_Text}"/>
+                                        <WrapPanel Margin="0,2,0,0">
+                                            <TextBlock Foreground="{StaticResource Inactive_Text}" FontSize="12">
+                                                <Run Text="{Binding CustomFolderPath}" />
+                                                <Hyperlink Command="{Binding SelectFolderCommand}" Foreground="{StaticResource Accent_Text}">
+                                                    <Run Text="{DynamicResource link_ChangeFolder}"/>
+                                                </Hyperlink>
+                                            </TextBlock>
+                                        </WrapPanel>
+                                    </StackPanel>
+                                </RadioButton>
+
+                                <RadioButton  IsChecked="{Binding IsOverwriteOriginal, Mode=TwoWay}" GroupName="OutputFolderGroup" Margin="0,12,0,0">
+                                    <StackPanel>
+                                        <TextBlock Text="{DynamicResource rbtn_OverwriteOriginal}" Foreground="{StaticResource Primary_Accent_Text}"/>
+                                        <TextBlock Text="{DynamicResource desc_OverwriteOriginal}" Foreground="{StaticResource Inactive_Text}" FontSize="12" Margin="0,2,0,0"/>
+                                    </StackPanel>
+                                </RadioButton>
+
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+                
+            </uc:FlowPanel>
+        </ScrollViewer>
     </Grid>
 </UserControl>

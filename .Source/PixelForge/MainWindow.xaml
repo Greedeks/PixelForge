@@ -40,7 +40,7 @@
                                     <ImageBrush ImageSource="{StaticResource Icon_Pictures}" Stretch="Uniform"/>
                                 </Rectangle.OpacityMask>
                             </Rectangle>
-                            <TextBlock Grid.Column="1" Text="{StaticResource rbtn_Optimizer}" FontSize="14" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" Text="{DynamicResource rbtn_Optimizer}" FontSize="14" VerticalAlignment="Center"/>
                         </Grid>
                     </RadioButton>
 
@@ -57,7 +57,7 @@
                                     <ImageBrush ImageSource="{StaticResource Icon_Transformation}" Stretch="Uniform"/>
                                 </Rectangle.OpacityMask>
                             </Rectangle>
-                            <TextBlock Grid.Column="1" Text="{StaticResource rbtn_SvgToXaml}" FontSize="14" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" Text="{DynamicResource rbtn_SvgToXaml}" FontSize="14" VerticalAlignment="Center"/>
                         </Grid>
                     </RadioButton>
 
@@ -74,7 +74,7 @@
                                     <ImageBrush ImageSource="{StaticResource Icon_Hammer}" Stretch="Uniform"/>
                                 </Rectangle.OpacityMask>
                             </Rectangle>
-                            <TextBlock Grid.Column="1" Text="{StaticResource rbtn_Settings}" FontSize="14" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" Text="{DynamicResource rbtn_Settings}" FontSize="14" VerticalAlignment="Center"/>
                         </Grid>
                     </RadioButton>
 
