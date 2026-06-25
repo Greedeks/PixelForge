@@ -14,11 +14,12 @@
             <Setter.Value>
                 <ControlTemplate TargetType="RadioButton">
                     <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="7" Padding="10,7">
-                        <ContentPresenter x:Name="content" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
-                            <ContentPresenter.RenderTransform>
-                                <ScaleTransform ScaleX="1" ScaleY="1"/>
-                            </ContentPresenter.RenderTransform>
-                        </ContentPresenter>
+                        <Grid HorizontalAlignment="Left" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+                            <Grid.RenderTransform>
+                                <ScaleTransform x:Name="ContentScale" ScaleX="1" ScaleY="1"/>
+                            </Grid.RenderTransform>
+                            <ContentPresenter x:Name="content" VerticalAlignment="Center"/>
+                        </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -29,17 +30,29 @@
                             <Setter Property="Foreground" Value="{StaticResource Accent_Text}"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="content" Property="RenderTransform">
-                                <Setter.Value>
-                                    <ScaleTransform ScaleX="0.95" ScaleY="0.95"/>
-                                </Setter.Value>
-                            </Setter>
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard Timeline.DesiredFrameRate="120">
+                                        <DoubleAnimation Storyboard.TargetName="ContentScale" Storyboard.TargetProperty="ScaleX" To="0.95" Duration="0:0:0.08"/>
+                                        <DoubleAnimation Storyboard.TargetName="ContentScale" Storyboard.TargetProperty="ScaleY" To="0.95" Duration="0:0:0.08"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard Timeline.DesiredFrameRate="120">
+                                        <DoubleAnimation Storyboard.TargetName="ContentScale" Storyboard.TargetProperty="ScaleX" To="1.0" Duration="0:0:0.08"/>
+                                        <DoubleAnimation Storyboard.TargetName="ContentScale" Storyboard.TargetProperty="ScaleY" To="1.0" Duration="0:0:0.08"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
+
 
     <Style x:Key="{x:Type RadioButton}" TargetType="{x:Type RadioButton}">
         <Setter Property="Background" Value="Transparent"/>
@@ -52,15 +65,19 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-
                         <Grid Grid.Column="0" VerticalAlignment="Top" Margin="0,3,14,0" Width="18" Height="18">
+                            <Ellipse Fill="{StaticResource Brush_ShadowOverlay}" Opacity="0.5" IsHitTestVisible="False">
+                                <Ellipse.RenderTransform>
+                                    <TranslateTransform X="1.5" Y="2.5"/>
+                                </Ellipse.RenderTransform>
+                            </Ellipse>
+
                             <Ellipse x:Name="outerCircle" Stroke="{StaticResource Border_Default}" StrokeThickness="1.5" Fill="{StaticResource Background_Control}"/>
                             <Ellipse x:Name="innerDot" Width="10" Height="10" Fill="White" Visibility="Collapsed"/>
                         </Grid>
 
                         <ContentPresenter Grid.Column="1" Focusable="False" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                     </Grid>
-
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="outerCircle" Property="Stroke" Value="{StaticResource Border_Hover}"/>
@@ -75,5 +92,5 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
 </ResourceDictionary>

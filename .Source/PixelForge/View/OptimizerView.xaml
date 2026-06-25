@@ -7,8 +7,8 @@
              xmlns:uc="clr-namespace:PixelForge.Assets.UserControls"
              xmlns:vm="clr-namespace:PixelForge.Core.ViewModel"
              xmlns:local="clr-namespace:PixelForge.View"
-             mc:Ignorable="d"
-             d:DesignHeight="450" d:DesignWidth="800" FontFamily="{StaticResource AA Stetica}" AllowDrop="True" Drop="OnDrop" DragOver="OnDragOver">
+             mc:Ignorable="d" Style="{StaticResource LaunchPage}"
+             d:DesignHeight="450" d:DesignWidth="800" AllowDrop="True" Drop="OnDrop" DragOver="OnDragOver">
     <UserControl.Resources>
         <ResourceDictionary>
             <conv:BoolToVisibilityConverter x:Key="BoolToVisibility"/>
