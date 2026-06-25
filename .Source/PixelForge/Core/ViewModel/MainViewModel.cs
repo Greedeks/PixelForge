@@ -8,6 +8,9 @@ namespace PixelForge.Core.ViewModel
     internal class MainViewModel : ViewModelBase
     {
         private readonly MainModel _model = new();
+        private readonly OptimizerView _optimizerView = new();
+        private readonly SvgToXamlView _svgToXamlView = new();
+        private readonly SettingsView _settingsView = new();
 
         public object CurrentView
         {
@@ -19,17 +22,13 @@ namespace PixelForge.Core.ViewModel
         public ICommand NavigateToSvgToXamlCommand { get; set; }
         public ICommand NavigateToSettingsCommand { get; set; }
 
-        private void NavigateToOptimizer(object obj) => CurrentView = new OptimizerView();
-        private void NavigateToSvgToXaml(object obj) => CurrentView = new SvgToXamlView();
-        private void NavigateToSettings(object obj) => CurrentView = new SettingsView();
-
         public MainViewModel()
         {
-            CurrentView = new OptimizerView();
+            CurrentView = _optimizerView;
 
-            NavigateToOptimizerCommand = new RelayCommand(NavigateToOptimizer);
-            NavigateToSvgToXamlCommand = new RelayCommand(NavigateToSvgToXaml);
-            NavigateToSettingsCommand = new RelayCommand(NavigateToSettings);
+            NavigateToOptimizerCommand = new RelayCommand(_ => CurrentView = _optimizerView);
+            NavigateToSvgToXamlCommand = new RelayCommand(_ => CurrentView = _svgToXamlView);
+            NavigateToSettingsCommand = new RelayCommand(_ => CurrentView = _settingsView);
         }
     }
 }

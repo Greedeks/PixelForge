@@ -12,5 +12,21 @@
     <v:String x:Key="title_OutputFolder">Output Folder</v:String>
     <v:String x:Key="link_ChangeFolder">Change...</v:String>
     <v:String x:Key="desc_OverwriteOriginal">The file on disk will be overwritten. This action cannot be undone.</v:String>
-    
+
+    <v:String x:Key="dropzone_Title">Drop files or folder here</v:String>
+    <v:String x:Key="dropzone_Sub">or click to select files</v:String>
+    <v:String x:Key="status_Processing">Optimizing...</v:String>
+    <v:String x:Key="label_Files">Files</v:String>
+    <v:String x:Key="label_Queue">In queue</v:String>
+    <v:String x:Key="label_Processed">Processed</v:String>
+    <v:String x:Key="label_Saved">Saved</v:String>
+    <v:String x:Key="btn_SaveAll">Save all</v:String>
+    <v:String x:Key="btn_ProcessAll">Process all</v:String>
+    <v:String x:Key="btn_ClearAll">Clear all</v:String>
+    <v:String x:Key="stat_Processed">PROCESSED</v:String>
+    <v:String x:Key="stat_Saved">SAVED</v:String>
+    <v:String x:Key="stat_AvgCompression">AVG COMPRESSION</v:String>
+
+    <v:String x:Key="msg_SaveError">Failed to save:</v:String>
+
 </ResourceDictionary>

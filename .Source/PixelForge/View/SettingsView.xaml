@@ -7,7 +7,7 @@
              xmlns:vm="clr-namespace:PixelForge.Core.ViewModel"
              xmlns:local="clr-namespace:PixelForge.View"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800" FontFamily="{StaticResource AA Stetica}">
     <UserControl.DataContext>
         <vm:SettingsViewModel/>
     </UserControl.DataContext>

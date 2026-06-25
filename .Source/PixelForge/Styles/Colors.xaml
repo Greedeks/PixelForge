@@ -4,7 +4,6 @@
     <SolidColorBrush x:Key="Accent_Text" Color="#A29BFE"/>
     <SolidColorBrush x:Key="Inactive_Text" Color="#666666"/>
     <SolidColorBrush x:Key="Primary_Accent_Text" Color="#DCD7FF"/>
-    <SolidColorBrush x:Key="Secondary_Accent_Text" Color="#C8E6D8"/>
     <SolidColorBrush x:Key="Brush_ShadowOverlay" Color="#33000000"/>
     
     <SolidColorBrush x:Key="Background_Page" Color="#0A0A0A"/>
@@ -14,15 +13,19 @@
     <SolidColorBrush x:Key="Background_Control" Color="#222222"/>
     <SolidColorBrush x:Key="Background_NavActive" Color="#1E1A2E"/>
     <SolidColorBrush x:Key="Background_Card" Color="#161616"/>
+    <SolidColorBrush x:Key="Background_Card_Completed" Color="#191919"/>
     <SolidColorBrush x:Key="Background_Scrollbar" Color="#383838"/>
     <SolidColorBrush x:Key="Background_Hover_Scrollbar" Color="#434343"/>
     
     <SolidColorBrush x:Key="Accent_Primary" Color="#6C5CE7"/>
-    <SolidColorBrush x:Key="Accent_Secondary" Color="#162a20"/>
     <SolidColorBrush x:Key="Accent_Hover_Primary" Color="#7D6FF0"/>
-    <SolidColorBrush x:Key="Accent_Hover_Secondary" Color="#1e3a28"/>
-
+    <SolidColorBrush x:Key="Accent_Danger" Color="#C0392B"/>
+    <SolidColorBrush x:Key="Accent_Hover_Danger" Color="#E74C3C"/>
+    <SolidColorBrush x:Key="Accent_Success" Color="#27AE60"/>
+    <SolidColorBrush x:Key="Accent_Hover_Success" Color="#2ECC71"/>
+    
     <SolidColorBrush x:Key="Border_Default" Color="#1E1E1E"/>
     <SolidColorBrush x:Key="Border_Hover" Color="#2a2a2a"/>
-
+    <SolidColorBrush x:Key="Border_Hover_Card" Color="#3A3566"/>
+    
 </ResourceDictionary>
