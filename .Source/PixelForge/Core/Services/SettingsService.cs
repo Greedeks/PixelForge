@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace PixelForge.Core.Services
 {
-    internal class SettingsService
+    internal sealed class SettingsService
     {
         private class SettingsData
         {

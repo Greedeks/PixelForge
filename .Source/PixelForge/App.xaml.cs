@@ -1,5 +1,7 @@
 using System.Windows;
+using System.Windows.Threading;
 using PixelForge.Core.Services;
+using PixelForge.Helpers.Managers;
 
 namespace PixelForge
 {
@@ -9,15 +11,37 @@ namespace PixelForge
         {
             base.OnStartup(e);
 
+            DispatcherUnhandledException += OnDispatcherUnhandledException;
+            AppDomain.CurrentDomain.UnhandledException += OnDomainUnhandledException;
+            TaskScheduler.UnobservedTaskException += OnUnobservedTaskException;
+
             SettingsService.Load();
         }
 
         protected override void OnExit(ExitEventArgs e)
         {
             SettingsService.Save();
-
             base.OnExit(e);
         }
-    }
 
+        private void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        {
+            MessageWindowManager.Show(e.Exception);
+            e.Handled = true;
+        }
+
+        private void OnDomainUnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            if (e.ExceptionObject is Exception ex)
+            {
+                MessageWindowManager.Show(ex);
+            }
+        }
+
+        private void OnUnobservedTaskException(object? sender, UnobservedTaskExceptionEventArgs e)
+        {
+            MessageWindowManager.Show(e.Exception);
+            e.SetObserved();
+        }
+    }
 }

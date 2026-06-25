@@ -121,7 +121,7 @@ namespace PixelForge.Assets.UserControls
             return [];
         }
 
-        private void ReleaseGroups(List<FlowItemGroup> groups)
+        private void ReleaseGroups(List<FlowItemGroup>? groups)
         {
             if (groups != null)
             {
@@ -341,7 +341,7 @@ namespace PixelForge.Assets.UserControls
                     return finalSize;
                 }
 
-                List<FlowItemGroup> groupsToArrange = _cachedLayout;
+                List<FlowItemGroup>? groupsToArrange = _cachedLayout;
 
                 groupsToArrange ??= CreateOptimalColumns(finalSize.Width, finalSize.Height, _visibleCache);
 
@@ -382,7 +382,7 @@ namespace PixelForge.Assets.UserControls
             return 0;
         }
 
-        private void ArrangeAligned(List<FlowItemGroup> groups, double availableWidth)
+        private void ArrangeAligned(List<FlowItemGroup>? groups, double availableWidth)
         {
             if (groups != null && groups.Count != 0)
             {
@@ -534,7 +534,7 @@ namespace PixelForge.Assets.UserControls
 
             for (int columnCount = Math.Min(maxPossibleColumns, visibleChildren.Count); columnCount >= 1; columnCount--)
             {
-                List<FlowItemGroup> columns = TryDistributeToColumns(columnCount, availableHeight, visibleChildren);
+                List<FlowItemGroup>? columns = TryDistributeToColumns(columnCount, availableHeight, visibleChildren);
                 if (columns != null && columns.Count > 0 && CalculateTotalWidth(columns) <= availableWidth)
                 {
                     return columns;
@@ -548,7 +548,7 @@ namespace PixelForge.Assets.UserControls
         private List<FlowItemGroup> CreateWrappedRows(double maxWidth, List<UIElement> visibleChildren)
         {
             List<FlowItemGroup> rows = GetGroupList();
-            FlowItemGroup current = null;
+            FlowItemGroup? current = null;
 
             for (int i = 0; i < visibleChildren.Count; i++)
             {
@@ -590,7 +590,7 @@ namespace PixelForge.Assets.UserControls
         private List<FlowItemGroup> CreateWrappedColumns(double maxHeight, List<UIElement> visibleChildren)
         {
             List<FlowItemGroup> cols = GetGroupList();
-            FlowItemGroup current = null;
+            FlowItemGroup? current = null;
 
             for (int i = 0; i < visibleChildren.Count; i++)
             {

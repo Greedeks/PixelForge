@@ -10,7 +10,7 @@ namespace PixelForge.Core.Services
         OverwriteOriginal
     }
 
-    internal class SaveService
+    internal sealed class SaveService
     {
         private static SaveService? _instance;
 

@@ -52,7 +52,7 @@ namespace PixelForge.Core.Services
             int targetWidth = decodePixelWidth;
             int targetHeight = Math.Max(1, (int)Math.Round(original.Height * scale));
 
-            SKSamplingOptions samplingOptions = new SKSamplingOptions(SKFilterMode.Linear, SKMipmapMode.Linear);
+            SKSamplingOptions samplingOptions = new(SKFilterMode.Linear, SKMipmapMode.Linear);
             using SKBitmap resized = original.Resize(new SKImageInfo(targetWidth, targetHeight), samplingOptions);
             SKBitmap bitmapToEncode = resized ?? original;
 

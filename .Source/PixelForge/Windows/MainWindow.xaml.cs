@@ -1,6 +1,6 @@
 using System.Windows;
 
-namespace PixelForge
+namespace PixelForge.Windows
 {
     public partial class MainWindow : Window
     {

@@ -9,6 +9,8 @@ using PixelForge.Core.Model;
 using PixelForge.Core.Services;
 using PixelForge.Helpers;
 using PixelForge.Helpers.ImageOptimization;
+using PixelForge.Helpers.Managers;
+using PixelForge.Windows;
 
 namespace PixelForge.Core.ViewModel
 {
@@ -126,7 +128,7 @@ namespace PixelForge.Core.ViewModel
 
         private void AddFiles()
         {
-            VistaOpenFileDialog dialog = new VistaOpenFileDialog
+            VistaOpenFileDialog dialog = new()
             {
                 Multiselect = true,
                 Filter = "Images|*.png;*.jpg;*.jpeg;*.webp;*.svg"
@@ -196,9 +198,10 @@ namespace PixelForge.Core.ViewModel
                 OptimizationResult result = await Task.Run(() => ImageOptimizer.Optimize(card.FilePath));
                 card.ApplyResult(result);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 card.HasError = true;
+                MessageWindowManager.ShowOptimizeError(ex);
             }
             finally
             {
@@ -211,7 +214,7 @@ namespace PixelForge.Core.ViewModel
         private async Task ProcessAllAsync()
         {
             int maxParallelism = Math.Max(2, Environment.ProcessorCount / 2);
-            List<FileCardModel> toProcess = Cards.Where(c => !c.IsDone).ToList();
+            List<FileCardModel> toProcess = [.. Cards.Where(c => !c.IsDone)];
 
             using SemaphoreSlim sem = new(maxParallelism);
             await Task.WhenAll(toProcess.Select(async card =>
@@ -230,21 +233,21 @@ namespace PixelForge.Core.ViewModel
 
         private void SaveAll()
         {
-            List<string> errors = [];
+            List<(string FileName, Exception Ex)> errors = [];
 
-            foreach (FileCardModel? card in Cards.Where(c => c.IsDone && !c.IsSaved && c.Model.OptimizationResult is not null).ToList())
+            foreach (FileCardModel card in Cards.Where(c => c.IsDone && !c.IsSaved && c.Model.OptimizationResult is not null).ToList())
             {
                 try
                 {
                     SaveService.Instance.SaveResult(card.FilePath, card.Model.OptimizationResult!);
                     card.IsSaved = true;
                 }
-                catch (Exception ex) { errors.Add($"{card.FileName}: {ex.Message}"); }
+                catch (Exception ex) { errors.Add((card.FileName, ex)); }
             }
 
             if (errors.Count > 0)
             {
-                //MessageBox.Show(string.Join("\n", errors, MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageWindowManager.ShowErrors(errors.Select(e => new Exception(e.FileName, e.Ex)), MessageWindowType.ErrorSave);
             }
 
             CommandManager.InvalidateRequerySuggested();
@@ -262,9 +265,9 @@ namespace PixelForge.Core.ViewModel
                 card.IsSaved = true;
                 return SaveService.Instance.SaveResult(card.FilePath, card.Model.OptimizationResult);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //MessageBox.Show(ex.Message.ToString(), MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageWindowManager.ShowSaveError(ex);
                 return null;
             }
         }

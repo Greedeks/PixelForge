@@ -12,7 +12,7 @@ namespace PixelForge.Core.ViewModel
         private readonly SvgToXamlView _svgToXamlView = new();
         private readonly SettingsView _settingsView = new();
 
-        public object CurrentView
+        public object? CurrentView
         {
             get => _model.CurrentView;
             set { _model.CurrentView = value; OnPropertyChanged(); }
