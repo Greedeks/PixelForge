@@ -1,10 +1,11 @@
 using System.Windows.Media.Imaging;
 using PixelForge.Core.Base;
+using PixelForge.Core.Providers.Images;
 using PixelForge.Helpers;
 
 namespace PixelForge.Core.Model
 {
-    internal class FileCardModel(OptimizerModel model, BitmapSource? thumbnail = null) : ViewModelBase
+    internal class FileCardModel(OptimizerModel model, IImageSource source, BitmapSource? thumbnail = null) : ViewModelBase
     {
         private bool _isProcessing;
         private bool _isDone;
@@ -12,9 +13,9 @@ namespace PixelForge.Core.Model
         private bool _hasError;
 
         public OptimizerModel Model { get; } = model;
+        public IImageSource Source { get; } = source;
         public BitmapSource? Thumbnail { get; init; } = thumbnail;
 
-        public string FilePath => Model.FilePath;
         public string FileName => Model.FileName;
         public string FileSizeBefore => FileSizeFormatter.Format(Model.SizeBytes);
         public string FileSizeAfter => Model.OptimizationResult is { } r ? FileSizeFormatter.Format(r.SizeAfterBytes) : string.Empty;

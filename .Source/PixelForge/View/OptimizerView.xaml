@@ -219,8 +219,7 @@
                                 IsProcessing="{Binding IsProcessing}"
                                 IsDone="{Binding IsDone}"
                                 IsSaved="{Binding IsSaved}"
-                                Thumbnail="{Binding Thumbnail}"
-                                FilePath="{Binding FilePath}"/>
+                                Thumbnail="{Binding Thumbnail}"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
@@ -279,8 +278,7 @@
                                 IsProcessing="{Binding IsProcessing}"
                                 IsDone="{Binding IsDone}"
                                 IsSaved="{Binding IsSaved}"
-                                Thumbnail="{Binding Thumbnail}"
-                                FilePath="{Binding FilePath}"/>
+                                Thumbnail="{Binding Thumbnail}"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
@@ -335,8 +333,7 @@
                                 IsProcessing="{Binding IsProcessing}"
                                 IsDone="{Binding IsDone}"
                                 IsSaved="{Binding IsSaved}"
-                                Thumbnail="{Binding Thumbnail}"
-                                FilePath="{Binding FilePath}"/>
+                                Thumbnail="{Binding Thumbnail}"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

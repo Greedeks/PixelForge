@@ -30,9 +30,6 @@ namespace PixelForge.Assets.UserControls
         internal static readonly DependencyProperty IsSavedProperty =
             DependencyProperty.Register(nameof(IsSaved), typeof(bool), typeof(FileCard), new PropertyMetadata(false));
 
-        internal static readonly DependencyProperty FilePathProperty =
-            DependencyProperty.Register(nameof(FilePath), typeof(string), typeof(FileCard), new PropertyMetadata(string.Empty));
-
         internal string FileName
         {
             get => (string)GetValue(FileNameProperty);
@@ -79,12 +76,6 @@ namespace PixelForge.Assets.UserControls
         {
             get => (bool)GetValue(IsSavedProperty);
             set => SetValue(IsSavedProperty, value);
-        }
-
-        internal string FilePath
-        {
-            get => (string)GetValue(FilePathProperty);
-            set => SetValue(FilePathProperty, value);
         }
 
         public FileCard()

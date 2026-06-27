@@ -12,7 +12,8 @@
     <v:String x:Key="title_OutputFolder">Output Folder</v:String>
     <v:String x:Key="link_ChangeFolder">Change...</v:String>
     <v:String x:Key="desc_OverwriteOriginal">The file on disk will be overwritten. This action cannot be undone.</v:String>
-
+    <v:String x:Key="desc_TempFilesFallback">Files dropped from archives or other temporary sources will always be saved to the selected folder, regardless of the option above.</v:String>
+    
     <v:String x:Key="dropzone_Title">Drop files or folder here</v:String>
     <v:String x:Key="dropzone_Sub">or click to select files</v:String>
     <v:String x:Key="status_Processing">Optimizing...</v:String>

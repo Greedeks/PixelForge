@@ -1,5 +1,6 @@
 using System.IO;
 using System.Windows.Media.Imaging;
+using PixelForge.Core.Providers.Images;
 using SkiaSharp;
 using Svg.Skia;
 
@@ -9,17 +10,17 @@ namespace PixelForge.Core.Services
     {
         private const int DefaultThumbnailSize = 96;
 
-        internal static BitmapSource? GetThumbnail(string path, int decodePixelWidth = DefaultThumbnailSize)
+        internal static BitmapSource? GetThumbnail(IImageSource source, int decodePixelWidth = DefaultThumbnailSize)
         {
             try
             {
-                string ext = Path.GetExtension(path).ToLowerInvariant();
+                string ext = source.Extension.ToLowerInvariant();
 
                 return ext switch
                 {
-                    ".svg" => LoadSvgThumbnail(path, decodePixelWidth),
-                    ".webp" => LoadWebpThumbnail(path, decodePixelWidth),
-                    _ => LoadThumbnail(path, decodePixelWidth)
+                    ".svg" => LoadSvgThumbnail(source, decodePixelWidth),
+                    ".webp" => LoadWebpThumbnail(source, decodePixelWidth),
+                    _ => LoadThumbnail(source, decodePixelWidth)
                 };
             }
             catch
@@ -28,21 +29,26 @@ namespace PixelForge.Core.Services
             }
         }
 
-        private static BitmapSource? LoadThumbnail(string path, int decodePixelWidth)
+        private static BitmapSource? LoadThumbnail(IImageSource source, int decodePixelWidth)
         {
+            using Stream stream = source.OpenRead();
+
             BitmapImage bmp = new();
             bmp.BeginInit();
-            bmp.UriSource = new Uri(path);
+            bmp.StreamSource = stream;
             bmp.DecodePixelWidth = decodePixelWidth;
             bmp.CacheOption = BitmapCacheOption.OnLoad;
             bmp.EndInit();
             bmp.Freeze();
+
             return bmp;
         }
 
-        private static BitmapSource? LoadWebpThumbnail(string path, int decodePixelWidth)
+        private static BitmapSource? LoadWebpThumbnail(IImageSource source, int decodePixelWidth)
         {
-            using SKBitmap? original = SKBitmap.Decode(path);
+            using Stream stream = source.OpenRead();
+            using SKBitmap? original = SKBitmap.Decode(stream);
+
             if (original is null)
             {
                 return null;
@@ -53,16 +59,19 @@ namespace PixelForge.Core.Services
             int targetHeight = Math.Max(1, (int)Math.Round(original.Height * scale));
 
             SKSamplingOptions samplingOptions = new(SKFilterMode.Linear, SKMipmapMode.Linear);
+
             using SKBitmap resized = original.Resize(new SKImageInfo(targetWidth, targetHeight), samplingOptions);
             SKBitmap bitmapToEncode = resized ?? original;
 
             return EncodeToBitmapSource(bitmapToEncode);
         }
 
-        private static BitmapSource? LoadSvgThumbnail(string path, int decodePixelWidth)
+        private static BitmapSource? LoadSvgThumbnail(IImageSource source, int decodePixelWidth)
         {
+            using Stream stream = source.OpenRead();
             using SKSvg svg = new();
-            SKPicture? picture = svg.Load(path);
+
+            SKPicture? picture = svg.Load(stream);
             if (picture is null)
             {
                 return null;
@@ -86,8 +95,8 @@ namespace PixelForge.Core.Services
             canvas.DrawPicture(picture);
             canvas.Flush();
 
-            using var snapshot = surface.Snapshot();
-            using var skBitmap = SKBitmap.FromImage(snapshot);
+            using SKImage snapshot = surface.Snapshot();
+            using SKBitmap skBitmap = SKBitmap.FromImage(snapshot);
             return EncodeToBitmapSource(skBitmap);
         }
 

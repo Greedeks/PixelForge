@@ -32,7 +32,7 @@
                                         </Style>
                                     </Image.Style>
                                 </Image>
-                                <TextBlock Text="{DynamicResource title_OutputFolder}" Margin="8,0,0,0" Foreground="{StaticResource Primary_Accent_Text}" FontSize="14" FontWeight="Medium" VerticalAlignment="Center"/>
+                                <TextBlock Text="{DynamicResource title_OutputFolder}" Margin="8,0,0,0" Foreground="{StaticResource Primary_Accent_Text}" FontSize="14" VerticalAlignment="Center"/>
                             </StackPanel>
 
                             <Rectangle Height="1" Fill="{StaticResource Border_Default}" Margin="0,0,0,16"/>
@@ -68,6 +68,19 @@
                                     </StackPanel>
                                 </RadioButton>
 
+                                <Rectangle Height="1" Fill="{StaticResource Border_Default}" Margin="0,16,0,16"/>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Height="20" Width="20">
+                                        <Image.Style>
+                                            <Style TargetType="{x:Type Image}">
+                                                <Setter Property="Source" Value="{StaticResource Icon_Info}"/>
+                                            </Style>
+                                        </Image.Style>
+                                    </Image>
+                                    <TextBlock Text="{DynamicResource desc_TempFilesFallback}" Margin="8,0,0,0" Foreground="{StaticResource Primary_Accent_Text}" FontSize="12" VerticalAlignment="Center"/>
+                                </StackPanel>
+                                
                             </StackPanel>
                         </StackPanel>
                     </Border>

@@ -6,6 +6,7 @@ using System.Windows.Input;
 using Ookii.Dialogs.Wpf;
 using PixelForge.Core.Base;
 using PixelForge.Core.Model;
+using PixelForge.Core.Providers.Images;
 using PixelForge.Core.Services;
 using PixelForge.Helpers;
 using PixelForge.Helpers.ImageOptimization;
@@ -142,13 +143,14 @@ namespace PixelForge.Core.ViewModel
 
         public void AddPaths(IEnumerable<string> paths)
         {
-            foreach (var path in paths)
+            foreach (string path in paths)
             {
                 if (Directory.Exists(path))
                 {
                     AddPaths(Directory.GetFiles(path));
                     continue;
                 }
+
                 if (!File.Exists(path))
                 {
                     continue;
@@ -159,25 +161,39 @@ namespace PixelForge.Core.ViewModel
                     continue;
                 }
 
-                if (Cards.Any(c => c.FilePath == path))
+                if (Cards.Any(c => c.Model.Source?.Name == Path.GetFileName(path) && c.Model.Source is ResourceImageSource f && f.Path == path))
                 {
                     continue;
                 }
 
-                FileInfo info = new(path);
+                IImageSource? source;
+                if (IsTemporaryPath(path))
+                {
+                    byte[] bytes;
+                    try { bytes = File.ReadAllBytes(path); }
+                    catch { continue; }
+                    source = new MemoryImageSource(Path.GetFileName(path), bytes);
+                }
+                else
+                {
+                    source = new ResourceImageSource(path);
+                }
+
                 OptimizerModel model = new()
                 {
-                    FilePath = path,
-                    FileName = Path.GetFileName(path),
-                    SizeBytes = info.Length
+                    Source = source,
+                    FileName = source.Name,
+                    SizeBytes = source.SizeBytes ?? 0
                 };
-                Cards.Add(new FileCardModel(model, ImageThumbnailService.GetThumbnail(path)));
+
+                Cards.Add(new FileCardModel(model, source, ImageThumbnailService.GetThumbnail(source)));
             }
 
             OnPropertyChanged(nameof(HasFiles));
             RaiseStatsChanged();
             CommandManager.InvalidateRequerySuggested();
         }
+
 
         private void RemoveCard(FileCardModel card)
         {
@@ -195,7 +211,7 @@ namespace PixelForge.Core.ViewModel
 
             try
             {
-                OptimizationResult result = await Task.Run(() => ImageOptimizer.Optimize(card.FilePath));
+                OptimizationResult result = await Task.Run(() => ImageOptimizer.Optimize(card.Model.Source));
                 card.ApplyResult(result);
             }
             catch (Exception ex)
@@ -210,6 +226,7 @@ namespace PixelForge.Core.ViewModel
                 CommandManager.InvalidateRequerySuggested();
             }
         }
+
 
         private async Task ProcessAllAsync()
         {
@@ -235,11 +252,11 @@ namespace PixelForge.Core.ViewModel
         {
             List<(string FileName, Exception Ex)> errors = [];
 
-            foreach (FileCardModel card in Cards.Where(c => c.IsDone && !c.IsSaved && c.Model.OptimizationResult is not null).ToList())
+            foreach (FileCardModel? card in Cards.Where(c => c.IsDone && !c.IsSaved && c.Model.OptimizationResult is not null).ToList())
             {
                 try
                 {
-                    SaveService.Instance.SaveResult(card.FilePath, card.Model.OptimizationResult!);
+                    SaveService.Instance.SaveResult(card.Model.Source, card.Model.OptimizationResult!);
                     card.IsSaved = true;
                 }
                 catch (Exception ex) { errors.Add((card.FileName, ex)); }
@@ -262,14 +279,21 @@ namespace PixelForge.Core.ViewModel
 
             try
             {
+                string path = SaveService.Instance.SaveResult(card.Model.Source, card.Model.OptimizationResult);
                 card.IsSaved = true;
-                return SaveService.Instance.SaveResult(card.FilePath, card.Model.OptimizationResult);
+                return path;
             }
             catch (Exception ex)
             {
                 MessageWindowManager.ShowSaveError(ex);
                 return null;
             }
+        }
+
+        private static bool IsTemporaryPath(string path)
+        {
+            string temp = Path.GetTempPath().TrimEnd(Path.DirectorySeparatorChar);
+            return path.StartsWith(temp, StringComparison.OrdinalIgnoreCase);
         }
 
         private void RaiseStatsChanged()
