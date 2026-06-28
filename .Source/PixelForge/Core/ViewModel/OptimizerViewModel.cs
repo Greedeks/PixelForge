@@ -8,7 +8,7 @@ using PixelForge.Core.Base;
 using PixelForge.Core.Model;
 using PixelForge.Core.Providers.Images;
 using PixelForge.Core.Services;
-using PixelForge.Helpers;
+using PixelForge.Helpers.Formatters;
 using PixelForge.Helpers.ImageOptimization;
 using PixelForge.Helpers.Managers;
 using PixelForge.Windows;

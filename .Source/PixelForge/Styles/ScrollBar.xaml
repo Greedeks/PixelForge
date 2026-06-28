@@ -8,15 +8,18 @@
         <Setter Property="IsTabStop" Value="False"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate>
-                    <Grid x:Name="Grid" Margin="0">
-                        <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="4" Height="Auto" Fill="Transparent"/>
-                        <Border x:Name="Rectangle1" CornerRadius="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="4" Height="Auto" Background="{TemplateBinding Background}"/>
-                    </Grid>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Border x:Name="Rectangle1" CornerRadius="2" Background="{TemplateBinding Background}"/>
                     <ControlTemplate.Triggers>
                         <Trigger Property="Tag" Value="Horizontal">
-                            <Setter TargetName="Rectangle1" Property="Width" Value="Auto"/>
-                            <Setter TargetName="Rectangle1" Property="Height" Value="7"/>
+                            <Setter TargetName="Rectangle1" Property="Height" Value="4"/>
+                            <Setter TargetName="Rectangle1" Property="VerticalAlignment" Value="Center"/>
+                            <Setter TargetName="Rectangle1" Property="HorizontalAlignment" Value="Stretch"/>
+                        </Trigger>
+                        <Trigger Property="Tag" Value="Vertical">
+                            <Setter TargetName="Rectangle1" Property="Width" Value="4"/>
+                            <Setter TargetName="Rectangle1" Property="HorizontalAlignment" Value="Center"/>
+                            <Setter TargetName="Rectangle1" Property="VerticalAlignment" Value="Stretch"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -24,33 +27,29 @@
         </Setter>
     </Style>
 
-    <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+    <Style TargetType="{x:Type ScrollBar}">
         <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
         <Setter Property="Foreground" Value="{StaticResource Background_Scrollbar}"/>
-        <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+        <Setter Property="Background" Value="Transparent"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Focusable" Value="False"/>
         <Setter Property="IsTabStop" Value="False"/>
-        <Setter Property="VirtualizingPanel.ScrollUnit" Value="Pixel"/>
-        <Setter Property="VirtualizingPanel.CacheLengthUnit" Value="Item"/>
-        <Setter Property="VirtualizingPanel.VirtualizationMode" Value="Recycling"/>
-        <Setter Property="Width" Value="0"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ScrollBar}">
-                    <Border x:Name="GridRoot" Width="4" Margin="0,5,-6,0">
-                        <Track x:Name="PART_Track" Grid.Row="0" IsDirectionReversed="true" Focusable="False">
+                    <Grid x:Name="GridRoot" Width="10" Background="{TemplateBinding Background}">
+                        <Track x:Name="PART_Track" IsDirectionReversed="true" Focusable="False">
                             <Track.Thumb>
-                                <Thumb x:Name="Thumb" Background="{TemplateBinding Foreground}" Style="{StaticResource ScrollThumbs}" Width="4"/>
+                                <Thumb x:Name="Thumb" Tag="Vertical" Background="{TemplateBinding Foreground}" Style="{StaticResource ScrollThumbs}"/>
                             </Track.Thumb>
                             <Track.IncreaseRepeatButton>
-                                <RepeatButton x:Name="PageUp" Command="ScrollBar.PageDownCommand" Opacity="0" Focusable="False"/>
+                                <RepeatButton Command="ScrollBar.PageDownCommand" Opacity="0" Focusable="False"/>
                             </Track.IncreaseRepeatButton>
                             <Track.DecreaseRepeatButton>
-                                <RepeatButton x:Name="PageDown" Command="ScrollBar.PageUpCommand" Opacity="0" Focusable="False"/>
+                                <RepeatButton Command="ScrollBar.PageUpCommand" Opacity="0" Focusable="False"/>
                             </Track.DecreaseRepeatButton>
                         </Track>
-                    </Border>
+                    </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger SourceName="Thumb" Property="IsMouseOver" Value="true">
                             <Setter Value="{StaticResource Background_Hover_Scrollbar}" TargetName="Thumb" Property="Background"/>
@@ -60,32 +59,48 @@
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter TargetName="Thumb" Property="Visibility" Value="Collapsed"/>
-                            <Setter TargetName="GridRoot"  Property="Width" Value="0"/>
-                        </Trigger>
-                        <Trigger Property="Orientation" Value="Horizontal">
-                            <Setter TargetName="GridRoot" Property="LayoutTransform">
-                                <Setter.Value>
-                                    <RotateTransform Angle="-90"/>
-                                </Setter.Value>
-                            </Setter>
-                            <Setter TargetName="PART_Track" Property="LayoutTransform">
-                                <Setter.Value>
-                                    <RotateTransform Angle="-90"/>
-                                </Setter.Value>
-                            </Setter>
-                            <Setter Property="Width" Value="Auto"/>
-                            <Setter Property="Height" Value="12"/>
-                            <Setter TargetName="Thumb" Property="Tag" Value="Horizontal"/>
-                            <Setter TargetName="PageDown" Property="Command" Value="ScrollBar.PageLeftCommand"/>
-                            <Setter TargetName="PageUp" Property="Command" Value="ScrollBar.PageRightCommand"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Horizontal">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ScrollBar}">
+                            <Grid x:Name="GridRoot" Height="10" Background="{TemplateBinding Background}">
+                                <Track x:Name="PART_Track" IsDirectionReversed="False" Focusable="False">
+                                    <Track.Thumb>
+                                        <Thumb x:Name="Thumb" Tag="Horizontal" Background="{TemplateBinding Foreground}" Style="{StaticResource ScrollThumbs}"/>
+                                    </Track.Thumb>
+                                    <Track.IncreaseRepeatButton>
+                                        <RepeatButton Command="ScrollBar.PageRightCommand" Opacity="0" Focusable="False"/>
+                                    </Track.IncreaseRepeatButton>
+                                    <Track.DecreaseRepeatButton>
+                                        <RepeatButton Command="ScrollBar.PageLeftCommand" Opacity="0" Focusable="False"/>
+                                    </Track.DecreaseRepeatButton>
+                                </Track>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger SourceName="Thumb" Property="IsMouseOver" Value="true">
+                                    <Setter Value="{StaticResource Background_Hover_Scrollbar}" TargetName="Thumb" Property="Background"/>
+                                </Trigger>
+                                <Trigger SourceName="Thumb" Property="IsDragging" Value="true">
+                                    <Setter Value="{StaticResource Background_Hover_Scrollbar}" TargetName="Thumb" Property="Background"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="false">
+                                    <Setter TargetName="Thumb" Property="Visibility" Value="Collapsed"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
-    <Style x:Key="{x:Type ScrollViewer}" TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource {x:Type ScrollViewer}}">
+    <Style TargetType="{x:Type ScrollViewer}">
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="VirtualizingPanel.ScrollUnit" Value="Pixel"/>
@@ -96,6 +111,9 @@
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Focusable" Value="False"/>
         <Setter Property="IsTabStop" Value="False"/>
+        <Style.Resources>
+            <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent" />
+        </Style.Resources>
     </Style>
-    
+
 </ResourceDictionary>

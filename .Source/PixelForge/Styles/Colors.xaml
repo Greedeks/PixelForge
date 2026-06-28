@@ -27,5 +27,11 @@
     <SolidColorBrush x:Key="Border_Default" Color="#1E1E1E"/>
     <SolidColorBrush x:Key="Border_Hover" Color="#2a2a2a"/>
     <SolidColorBrush x:Key="Border_Hover_Card" Color="#3A3566"/>
-    
+
+    <SolidColorBrush x:Key="Syntax_Tag" Color="#A8A0FF"/>
+    <SolidColorBrush x:Key="Syntax_AttrName" Color="#EAE6FF"/>
+    <SolidColorBrush x:Key="Syntax_AttrValue" Color="#7B6EE8"/>
+    <SolidColorBrush x:Key="Syntax_Comment" Color="#4EC970"/>
+    <SolidColorBrush x:Key="Syntax_Default" Color="#C0BDD8"/>
+
 </ResourceDictionary>

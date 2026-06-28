@@ -3,5 +3,6 @@
 
 
     <FontFamily x:Key="AA Stetica">/Assets/Fonts/AA Stetica Regular.ttf#AA Stetica</FontFamily>
-
+    <FontFamily x:Key="JetBrainsMono">/Assets/Fonts/JetBrainsMono-Regular.ttf#JetBrainsMono</FontFamily>
+    
 </ResourceDictionary>

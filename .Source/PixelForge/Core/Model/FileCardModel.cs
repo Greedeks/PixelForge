@@ -1,7 +1,7 @@
 using System.Windows.Media.Imaging;
 using PixelForge.Core.Base;
 using PixelForge.Core.Providers.Images;
-using PixelForge.Helpers;
+using PixelForge.Helpers.Formatters;
 
 namespace PixelForge.Core.Model
 {

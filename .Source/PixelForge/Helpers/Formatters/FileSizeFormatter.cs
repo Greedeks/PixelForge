@@ -1,4 +1,4 @@
-namespace PixelForge.Helpers
+namespace PixelForge.Helpers.Formatters
 {
     internal static class FileSizeFormatter
     {

@@ -57,6 +57,10 @@
     <Style x:Key="{x:Type RadioButton}" TargetType="{x:Type RadioButton}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="FontSize" Value="14"/>
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="IsTabStop" Value="False"/>
+        <Setter Property="Focusable" Value="False"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="RadioButton">
@@ -75,7 +79,6 @@
                             <Ellipse x:Name="outerCircle" Stroke="{StaticResource Border_Default}" StrokeThickness="1.5" Fill="{StaticResource Background_Control}"/>
                             <Ellipse x:Name="innerDot" Width="10" Height="10" Fill="White" Visibility="Collapsed"/>
                         </Grid>
-
                         <ContentPresenter Grid.Column="1" Focusable="False" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -86,6 +89,54 @@
                             <Setter TargetName="outerCircle" Property="Fill" Value="{StaticResource Accent_Primary}"/>
                             <Setter TargetName="outerCircle" Property="Stroke" Value="{StaticResource Accent_Primary}"/>
                             <Setter TargetName="innerDot" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="RbtnSimplified" TargetType="RadioButton">
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="IsTabStop" Value="False"/>
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RadioButton">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Grid x:Name="Root" Width="8" Height="8" Margin="0,0,8,0" Opacity="0">
+                            <Ellipse Fill="{StaticResource Brush_ShadowOverlay}">
+                                <Ellipse.RenderTransform>
+                                    <TranslateTransform X="1.5" Y="2"/>
+                                </Ellipse.RenderTransform>
+                            </Ellipse>
+                            <Ellipse Fill="{StaticResource Accent_Primary}"/>
+                        </Grid>
+                        <TextBlock x:Name="Label" Text="{TemplateBinding Content}" FontSize="13" Foreground="{StaticResource Inactive_Text}" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="Label" Property="Foreground" Value="{StaticResource Primary_Accent_Text}"/>
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard Timeline.DesiredFrameRate="120">
+                                        <DoubleAnimation Storyboard.TargetName="Root" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.1"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard Timeline.DesiredFrameRate="120">
+                                        <DoubleAnimation Storyboard.TargetName="Root" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.05"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Label" Property="Foreground" Value="{StaticResource Primary_Accent_Text}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

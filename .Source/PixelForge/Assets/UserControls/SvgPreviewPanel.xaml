@@ -1,0 +1,164 @@
+<UserControl x:Class="PixelForge.Assets.UserControls.SvgPreviewPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+              xmlns:conv="clr-namespace:PixelForge.Core.Converters"
+             xmlns:local="clr-namespace:PixelForge.Assets.UserControls"
+             mc:Ignorable="d" x:Name="Root"
+             d:DesignHeight="450" d:DesignWidth="900"
+             Background="{StaticResource Background_Page}">
+    <UserControl.Resources>
+        <conv:ImageToCheckerboardConverter x:Key="ImageToCheckerboard"/>
+        <conv:BoolToVisibilityConverter x:Key="BoolToVisibility"/>
+    </UserControl.Resources>
+
+    <Border Background="{StaticResource Background_Main}"
+            CornerRadius="0">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="1"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0" Margin="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Border Grid.Row="0" CornerRadius="6" ClipToBounds="True" BorderBrush="{StaticResource Border_Default}" BorderThickness="1">
+                    <Border.Background>
+                        <MultiBinding Converter="{StaticResource ImageToCheckerboard}">
+                            <Binding Path="Thumbnail" ElementName="Root"/>
+                        </MultiBinding>
+                    </Border.Background>
+                    <Grid>
+                        <Image x:Name="PreviewImage" Source="{Binding Thumbnail, ElementName=Root}" Stretch="{Binding ImageStretch, ElementName=Root}"  Margin="6"/>
+                        <Border Width="{Binding ActualWidth, ElementName=PreviewImage}" Height="{Binding ActualHeight, ElementName=PreviewImage}" HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False" Visibility="{Binding IsGuidesVisible, ElementName=Root,
+                             Converter={StaticResource BoolToVisibility}}">
+                            <Grid>
+                                <Rectangle StrokeThickness="2" StrokeDashArray="4 3" Fill="Transparent" Stroke="{StaticResource Brush_ShadowOverlay}"/>
+                                <Rectangle StrokeThickness="1" StrokeDashArray="4 3" Fill="Transparent" Stroke="{StaticResource Accent_Text}"/>
+                                <Line StrokeThickness="2" StrokeDashArray="4 3" VerticalAlignment="Center" X1="0" Y1="0" X2="{Binding ActualWidth, ElementName=PreviewImage}" Y2="0" Stroke="{StaticResource Brush_ShadowOverlay}"/>
+                                <Line StrokeThickness="1" StrokeDashArray="4 3" VerticalAlignment="Center" X1="0" Y1="0" X2="{Binding ActualWidth, ElementName=PreviewImage}" Y2="0" Stroke="{StaticResource Accent_Text}"/>
+                                <Line StrokeThickness="2" StrokeDashArray="4 3" HorizontalAlignment="Center" X1="0" Y1="0" X2="0" Y2="{Binding ActualHeight, ElementName=PreviewImage}" Stroke="{StaticResource Brush_ShadowOverlay}"/>
+                                <Line StrokeThickness="1" StrokeDashArray="4 3" HorizontalAlignment="Center" X1="0" Y1="0" X2="0" Y2="{Binding ActualHeight, ElementName=PreviewImage}" Stroke="{StaticResource Accent_Text}"/>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Row="0" Width="26" Height="26" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,10,10,0" CornerRadius="4" Cursor="Hand" MouseLeftButtonUp="BtnGuides_MouseLeftButtonUp">
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="Background" Value="#28000000"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsGuidesVisible, ElementName=Root}" Value="True">
+                                    <Setter Property="Background" Value="#60A29BFE"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+
+                    <Grid Width="14" Height="14" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Path Stroke="{StaticResource Accent_Text}" StrokeThickness="1" Fill="Transparent">
+                            <Path.Data>
+                                <GeometryGroup>
+                                    <LineGeometry StartPoint="0,7"  EndPoint="14,7"/>
+                                    <LineGeometry StartPoint="7,0"  EndPoint="7,14"/>
+                                    <EllipseGeometry Center="7,7" RadiusX="5" RadiusY="5"/>
+                                </GeometryGroup>
+                            </Path.Data>
+                        </Path>
+                    </Grid>
+                </Border>
+                
+                <Grid Grid.Row="1" Margin="0,10,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Left">
+                        <TextBlock Text="{DynamicResource label_Designed}" Foreground="{StaticResource Inactive_Text}" FontSize="11" LineHeight="16" LineStackingStrategy="BlockLineHeight"/>
+                        <TextBlock Text="{Binding DesignedSizeText, ElementName=Root}" Foreground="{StaticResource Primary_Accent_Text}" FontSize="13" Margin="0,4,0,0"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Center">
+                        <TextBlock Text="ViewBox" Foreground="{StaticResource Inactive_Text}" FontSize="11" HorizontalAlignment="Center"  LineHeight="16" LineStackingStrategy="BlockLineHeight"/>
+                        <TextBlock Text="{Binding ViewBoxText, ElementName=Root}" Foreground="{StaticResource Primary_Accent_Text}" FontSize="13" HorizontalAlignment="Center" Margin="0,4,0,0"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2" VerticalAlignment="Top" HorizontalAlignment="Center">
+                        <TextBlock Text="{DynamicResource label_ActualSize}" Foreground="{StaticResource Inactive_Text}" FontSize="11" HorizontalAlignment="Center" LineHeight="16" LineStackingStrategy="BlockLineHeight"/>
+                        <TextBlock Foreground="{StaticResource Primary_Accent_Text}" FontSize="13" HorizontalAlignment="Center" Margin="0,4,0,0">
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0:0} x {1:0}">
+                                    <Binding Path="ActualWidth" ElementName="PreviewImage"/>
+                                    <Binding Path="ActualHeight" ElementName="PreviewImage"/>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Top" MouseLeftButtonUp="StretchToggle_MouseLeftButtonUp" Background="Transparent" Cursor="Hand">
+                        <TextBlock Text="{DynamicResource label_Stretch}" Foreground="{StaticResource Inactive_Text}" FontSize="11" HorizontalAlignment="Right" LineHeight="16" LineStackingStrategy="BlockLineHeight"/>
+                        <Border x:Name="StretchToggle" Margin="0,4,0,0" Background="Transparent">
+                            <TextBlock Text="{Binding ImageStretch, ElementName=Root}" Foreground="{StaticResource Accent_Text}" FontSize="13" HorizontalAlignment="Right" TextDecorations="Underline"/>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+
+            <Rectangle Grid.Column="1" Fill="{StaticResource Border_Default}"/>
+
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Border Grid.Row="0" Background="{StaticResource Background_Page}">
+                    <local:XmlCodeViewer x:Name="CodeTextBox" FontFamily="{StaticResource JetBrainsMono}" FontSize="13" Background="Transparent" BorderThickness="0" Padding="20,10,5,5"/>
+                </Border>
+
+                <Border Grid.Row="1" Background="{StaticResource Background_Sidebar}" BorderBrush="{StaticResource Border_Default}" BorderThickness="0,1,0,0" Padding="14,10">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                            <RadioButton x:Name="TabXaml" Style="{StaticResource RbtnSimplified}" Content="XAML" IsChecked="True" Checked="Tab_Checked"  Margin="0,0,18,0"/>
+                            <RadioButton x:Name="TabSvg" Style="{StaticResource RbtnSimplified}" Content="SVG" Checked="Tab_Checked"/>
+                        </StackPanel>
+
+                        <Button x:Name="BtnCopy" Grid.Column="2" Style="{StaticResource OutlinedActionButton}" Click="BtnCopy_Click">
+                            <Grid VerticalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Grid.Column="0" Source="{StaticResource Icon_Copy}" Width="12" Height="12" Margin="0,0,6,0"/>
+                                <TextBlock x:Name="BtnCopyLabel" Grid.Column="1" Text="{DynamicResource btn_Copy}" Foreground="#FFFFFF" FontSize="12"/>
+                            </Grid>
+                        </Button>
+                    </Grid>
+                </Border>
+
+                <Border x:Name="CopiedToast" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,12,10" Background="{StaticResource Background_Main}" BorderBrush="{StaticResource Border_Hover}" BorderThickness="1" CornerRadius="6" Padding="12,7" Opacity="0" IsHitTestVisible="False">
+                    <Border.RenderTransform>
+                        <TranslateTransform x:Name="ToastTranslate" Y="6"/>
+                    </Border.RenderTransform>
+                    <TextBlock Text="{StaticResource toast_Copy}" Foreground="{StaticResource Primary_Accent_Text}" FontSize="12" VerticalAlignment="Center"/>
+                </Border>
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>

@@ -28,10 +28,15 @@
     <v:String x:Key="stat_Saved">SAVED</v:String>
     <v:String x:Key="stat_AvgCompression">AVG COMPRESSION</v:String>
 
+    <v:String x:Key="toast_Copy">Copied!</v:String>
     <v:String x:Key="btn_Copy">Copy</v:String>
     <v:String x:Key="btn_OK">OK</v:String>
     
     <v:String x:Key="msg_SaveError">Failed to save</v:String>
     <v:String x:Key="msg_OptimizationError">Optimization error</v:String>
 
+    <v:String x:Key="label_Designed">Original size</v:String>
+    <v:String x:Key="label_ActualSize">Actual size</v:String>
+    <v:String x:Key="label_Stretch">Stretch</v:String>
+    
 </ResourceDictionary>
