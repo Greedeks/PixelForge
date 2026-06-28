@@ -19,5 +19,11 @@ namespace PixelForge.Core.Model
             get => SaveService.Instance.CustomFolderPath;
             set => SaveService.Instance.CustomFolderPath = value;
         }
+
+        public bool AutoOptimizeOnLoad
+        {
+            get => SettingsService.Instance.AutoOptimizeOnLoad;
+            set => SettingsService.Instance.AutoOptimizeOnLoad = value;
+        }
     }
 }

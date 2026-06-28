@@ -53,7 +53,6 @@
         </Setter>
     </Style>
 
-
     <Style x:Key="{x:Type RadioButton}" TargetType="{x:Type RadioButton}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="FontSize" Value="14"/>
@@ -61,6 +60,7 @@
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="IsTabStop" Value="False"/>
         <Setter Property="Focusable" Value="False"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="RadioButton">
@@ -69,19 +69,24 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Grid Grid.Column="0" VerticalAlignment="Top" Margin="0,3,14,0" Width="18" Height="18">
+                        <Grid x:Name="glyphGrid" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,14,0" Width="18" Height="18">
                             <Ellipse Fill="{StaticResource Brush_ShadowOverlay}" Opacity="0.5" IsHitTestVisible="False">
                                 <Ellipse.RenderTransform>
                                     <TranslateTransform X="1.5" Y="2.5"/>
                                 </Ellipse.RenderTransform>
                             </Ellipse>
-
                             <Ellipse x:Name="outerCircle" Stroke="{StaticResource Border_Default}" StrokeThickness="1.5" Fill="{StaticResource Background_Control}"/>
                             <Ellipse x:Name="innerDot" Width="10" Height="10" Fill="White" Visibility="Collapsed"/>
                         </Grid>
-                        <ContentPresenter Grid.Column="1" Focusable="False" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                        <ContentPresenter x:Name="contentPresenter" Grid.Column="1" Focusable="False" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                     </Grid>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="VerticalContentAlignment" Value="Top">
+                            <Setter TargetName="glyphGrid" Property="VerticalAlignment" Value="Top"/>
+                            <Setter TargetName="glyphGrid" Property="Margin" Value="0,3,14,0"/>
+                            <Setter TargetName="contentPresenter" Property="VerticalAlignment" Value="Top"/>
+                        </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="outerCircle" Property="Stroke" Value="{StaticResource Border_Hover}"/>
                         </Trigger>

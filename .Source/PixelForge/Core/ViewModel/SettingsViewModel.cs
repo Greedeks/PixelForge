@@ -9,11 +9,6 @@ namespace PixelForge.Core.ViewModel
     {
         private readonly SettingsModel _model = SettingsModel.Instance;
 
-        public SettingsViewModel()
-        {
-            SelectFolderCommand = new RelayCommand(_ => SelectFolder());
-        }
-
         public RelayCommand SelectFolderCommand { get; }
 
         public bool IsNextToOriginal
@@ -90,6 +85,38 @@ namespace PixelForge.Core.ViewModel
             }
         }
 
+        public bool IsOptimizeImmediately
+        {
+            get => _model.AutoOptimizeOnLoad;
+            set
+            {
+                if (!value)
+                {
+                    return;
+                }
+
+                SetAutoOptimize(true);
+            }
+        }
+
+        public bool IsKeepOriginal
+        {
+            get => !_model.AutoOptimizeOnLoad;
+            set
+            {
+                if (!value)
+                {
+                    return;
+                }
+
+                SetAutoOptimize(false);
+            }
+        }
+        public SettingsViewModel()
+        {
+            SelectFolderCommand = new RelayCommand(_ => SelectFolder());
+        }
+
         private void SetSaveMode(SaveMode mode)
         {
             if (SettingsModel.SelectedSaveMode != mode)
@@ -100,6 +127,18 @@ namespace PixelForge.Core.ViewModel
                 OnPropertyChanged(nameof(IsNextToOriginal));
                 OnPropertyChanged(nameof(IsCustomFolder));
                 OnPropertyChanged(nameof(IsOverwriteOriginal));
+            }
+        }
+
+        private void SetAutoOptimize(bool autoOptimize)
+        {
+            if (_model.AutoOptimizeOnLoad != autoOptimize)
+            {
+                _model.AutoOptimizeOnLoad = autoOptimize;
+                SettingsService.Save();
+
+                OnPropertyChanged(nameof(IsOptimizeImmediately));
+                OnPropertyChanged(nameof(IsKeepOriginal));
             }
         }
     }

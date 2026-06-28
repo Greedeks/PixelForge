@@ -10,11 +10,12 @@ namespace PixelForge.Core.Services
         {
             public SaveMode SaveMode { get; set; } = SaveMode.NextToOriginal;
             public string CustomFolderPath { get; set; } = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            public bool AutoOptimizeOnLoad { get; set; } = true;
         }
 
         private static SettingsService? _instance;
         internal static SettingsService Instance => _instance ??= new SettingsService();
-        private SettingsService() { }
+        internal bool AutoOptimizeOnLoad { get; set; } = true;
 
         private static readonly string SettingsFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "pixelforge.settings.json");
 
@@ -44,6 +45,7 @@ namespace PixelForge.Core.Services
 
                 SaveService.Instance.Mode = data.SaveMode;
                 SaveService.Instance.CustomFolderPath = data.CustomFolderPath;
+                Instance.AutoOptimizeOnLoad = data.AutoOptimizeOnLoad;
             }
             catch { }
         }
@@ -55,7 +57,8 @@ namespace PixelForge.Core.Services
                 SettingsData data = new()
                 {
                     SaveMode = SaveService.Instance.Mode,
-                    CustomFolderPath = SaveService.Instance.CustomFolderPath
+                    CustomFolderPath = SaveService.Instance.CustomFolderPath,
+                    AutoOptimizeOnLoad = Instance.AutoOptimizeOnLoad
                 };
 
                 File.WriteAllText(SettingsFile, JsonSerializer.Serialize(data, JsonOptions));
