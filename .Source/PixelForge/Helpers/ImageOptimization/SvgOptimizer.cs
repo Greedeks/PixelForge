@@ -58,6 +58,8 @@ namespace PixelForge.Helpers.ImageOptimization
 
         private static readonly Regex CoordPair = new(@"(-?(?:\d+\.?\d*|\.\d+))(\s*[,\s]\s*)(-?(?:\d+\.?\d*|\.\d+))", RegexOptions.Compiled);
 
+        private static readonly Regex PathNumber = new(@"-?(?:\d+\.?\d*|\.\d+)", RegexOptions.Compiled);
+
         /// <summary>
         /// Optimizes the provided SVG source string with a given decimal precision.
         /// </summary>
@@ -251,7 +253,8 @@ namespace PixelForge.Helpers.ImageOptimization
                 if (char.IsLetter(ch))
                 {
                     result.Append(ch);
-                    bool isAbsolute = char.IsUpper(ch) && ch != 'Z' && ch != 'z';
+                    bool isAbsolute = char.IsUpper(ch);
+                    char upper = char.ToUpperInvariant(ch);
                     i++;
 
                     int start = i;
@@ -262,21 +265,25 @@ namespace PixelForge.Helpers.ImageOptimization
 
                     string nums = d[start..i];
 
-                    if (!isAbsolute || ch is 'Z' or 'z' or 'H' or 'h' or 'V' or 'v' or 'A' or 'a')
+                    if (!isAbsolute || upper == 'Z')
                     {
-                        if (char.ToUpperInvariant(ch) == 'H' && char.IsUpper(ch))
-                        {
-                            nums = ShiftSingleCoords(nums, tx);
-                        }
-                        else if (char.ToUpperInvariant(ch) == 'V' && char.IsUpper(ch))
-                        {
-                            nums = ShiftSingleCoords(nums, ty);
-                        }
                         result.Append(nums);
+                    }
+                    else if (upper == 'H')
+                    {
+                        result.Append(ShiftSingleCoords(nums, tx));
+                    }
+                    else if (upper == 'V')
+                    {
+                        result.Append(ShiftSingleCoords(nums, ty));
+                    }
+                    else if (upper == 'A')
+                    {
+                        result.Append(ShiftArcCoords(nums, tx, ty));
                     }
                     else
                     {
-                        result.Append(ShiftCoordPairs(nums, tx, ty, ch));
+                        result.Append(ShiftCoordPairs(nums, tx, ty));
                     }
                 }
                 else
@@ -290,11 +297,59 @@ namespace PixelForge.Helpers.ImageOptimization
         }
 
         /// <summary>
+        /// Modifies single standalone axis coordinates (used for absolute H and V path commands).
+        /// </summary>
+        private static string ShiftSingleCoords(string nums, double delta)
+        {
+            return Regex.Replace(nums, @"-?(?:\d+\.?\d*|\.\d+)", m =>
+            {
+                double v = double.Parse(m.Value, CultureInfo.InvariantCulture) + delta;
+                return FormatNum(v);
+            });
+        }
+
+        /// <summary>
+        /// Modifies absolute elliptical arc path coordinates (the 6th and 7th parameters in the arc parameter group) by adding translation deltas.
+        /// </summary>
+        private static string ShiftArcCoords(string nums, double tx, double ty)
+        {
+            MatchCollection matches = PathNumber.Matches(nums);
+
+            int completeGroups = (matches.Count / 7) * 7;
+            if (completeGroups == 0)
+            {
+                return nums;
+            }
+
+            StringBuilder sb = new(nums);
+            int offset = 0;
+
+            for (int i = 0; i < completeGroups; i++)
+            {
+                int posInGroup = i % 7;
+                if (posInGroup != 5 && posInGroup != 6)
+                {
+                    continue;
+                }
+
+                double delta = posInGroup == 5 ? tx : ty;
+                double val = double.Parse(matches[i].Value, CultureInfo.InvariantCulture) + delta;
+                string newVal = FormatNum(val);
+
+                int idx = matches[i].Index + offset;
+                sb.Remove(idx, matches[i].Length);
+                sb.Insert(idx, newVal);
+                offset += newVal.Length - matches[i].Length;
+            }
+
+            return sb.ToString();
+        }
+
+        /// <summary>
         /// Modifies grouped X and Y coordinate pairs within a segment by adding the translation factors.
         /// </summary>
-        private static string ShiftCoordPairs(string nums, double tx, double ty, char cmd)
+        private static string ShiftCoordPairs(string nums, double tx, double ty)
         {
-            StringBuilder sb = new();
             int pairCount = 0;
 
             string replaced = CoordPair.Replace(nums, match =>
@@ -306,18 +361,6 @@ namespace PixelForge.Helpers.ImageOptimization
             });
 
             return pairCount > 0 ? replaced : nums;
-        }
-
-        /// <summary>
-        /// Modifies single standalone axis coordinates (used for absolute H and V path commands).
-        /// </summary>
-        private static string ShiftSingleCoords(string nums, double delta)
-        {
-            return Regex.Replace(nums, @"-?(?:\d+\.?\d*|\.\d+)", m =>
-            {
-                double v = double.Parse(m.Value, CultureInfo.InvariantCulture) + delta;
-                return FormatNum(v);
-            });
         }
 
         /// <summary>

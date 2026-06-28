@@ -8,8 +8,8 @@ namespace PixelForge.Helpers.ImageOptimization
 {
     internal static class ImageOptimizer
     {
-        private const int DefaultLossyQuality = 85;
-        private const int PngQuantizeColors = 256;
+        private const uint PngQuantizeColors = 256;
+        private static readonly uint[] QualityLevels = [90, 85, 80, 75, 70];
 
         internal static OptimizationResult Optimize(IImageSource source)
         {
@@ -87,34 +87,92 @@ namespace PixelForge.Helpers.ImageOptimization
             return ms.ToArray();
         }
 
+
         private static OptimizationResult OptimizeJpeg(IImageSource source, long sizeBefore)
         {
-            try
-            {
-                using Stream stream = source.OpenRead();
-                using MagickImage image = new(stream);
-                image.Strip();
-                image.Format = MagickFormat.Jpg;
-                image.Quality = DefaultLossyQuality;
+            byte[]? bestBytes = null;
+            object lockObj = new();
 
-                return ProcessResultOrFallback(image.ToByteArray(), source, ".jpg", sizeBefore);
-            }
-            catch { return ProcessResultOrFallback(null, source, ".jpg", sizeBefore); }
+            Parallel.ForEach(QualityLevels, quality =>
+            {
+                try
+                {
+                    byte[] bytes = EncodeJpeg(source, quality);
+                    using MemoryStream ms = new(bytes);
+                    new ImageMagick.ImageOptimizer { OptimalCompression = true }.LosslessCompress(ms);
+                    ms.Position = 0;
+                    byte[] optimized = ms.ToArray();
+
+                    lock (lockObj)
+                    {
+                        if (bestBytes == null || optimized.Length < bestBytes.Length)
+                        {
+                            bestBytes = optimized;
+                        }
+                    }
+                }
+                catch (Exception ex) { MessageWindowManager.Show(ex); }
+            });
+
+            return ProcessResultOrFallback(bestBytes, source, ".jpg", sizeBefore);
+        }
+
+        private static byte[] EncodeJpeg(IImageSource source, uint quality)
+        {
+            using Stream stream = source.OpenRead();
+            using MagickImage image = new(stream);
+
+            image.Strip();
+
+            image.Format = MagickFormat.Jpeg;
+            image.Quality = quality;
+            image.Settings.Interlace = Interlace.Jpeg;
+            image.Settings.SetDefine(MagickFormat.Jpeg, "optimize-coding", "true");
+            image.Settings.SetDefine(MagickFormat.Jpeg, "sampling-factor", "2x2,1x1,1x1");
+
+            return image.ToByteArray();
         }
 
         private static OptimizationResult OptimizeWebp(IImageSource source, long sizeBefore)
         {
-            try
-            {
-                using Stream stream = source.OpenRead();
-                using MagickImage image = new(stream);
-                image.Strip();
-                image.Format = MagickFormat.WebP;
-                image.Quality = DefaultLossyQuality;
+            byte[]? bestBytes = null;
+            object lockObj = new();
 
-                return ProcessResultOrFallback(image.ToByteArray(), source, ".webp", sizeBefore);
-            }
-            catch { return ProcessResultOrFallback(null, source, ".webp", sizeBefore); }
+            Parallel.ForEach(QualityLevels, quality =>
+            {
+                try
+                {
+                    byte[] bytes = EncodeWebp(source, quality);
+
+                    lock (lockObj)
+                    {
+                        if (bestBytes == null || bytes.Length < bestBytes.Length)
+                        {
+                            bestBytes = bytes;
+                        }
+                    }
+                }
+                catch (Exception ex) { MessageWindowManager.Show(ex); }
+            });
+
+            return ProcessResultOrFallback(bestBytes, source, ".webp", sizeBefore);
+        }
+
+        private static byte[] EncodeWebp(IImageSource source, uint quality)
+        {
+            using Stream stream = source.OpenRead();
+            using MagickImage image = new(stream);
+
+            image.Strip();
+
+            image.Format = MagickFormat.WebP;
+            image.Quality = quality;
+            image.Settings.SetDefine(MagickFormat.WebP, "method", "6");
+            image.Settings.SetDefine(MagickFormat.WebP, "segments", "4");
+            image.Settings.SetDefine(MagickFormat.WebP, "sns-strength", "80");
+            image.Settings.SetDefine(MagickFormat.WebP, "filter-strength", "35");
+
+            return image.ToByteArray();
         }
 
         private static OptimizationResult OptimizeSvg(IImageSource source, long sizeBefore)
