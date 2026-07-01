@@ -73,7 +73,9 @@ namespace PixelForge.Helpers.ImageOptimization
             };
             image.Quantize(settings);
 
-            image.Settings.SetDefine(MagickFormat.Png, "color-type", "3");
+            string colorType = image.HasAlpha ? "6" : "3";
+            image.Settings.SetDefine(MagickFormat.Png, "color-type", colorType);
+
             image.Format = MagickFormat.Png;
             image.Quality = 95;
 
@@ -86,7 +88,6 @@ namespace PixelForge.Helpers.ImageOptimization
 
             return ms.ToArray();
         }
-
 
         private static OptimizationResult OptimizeJpeg(IImageSource source, long sizeBefore)
         {
