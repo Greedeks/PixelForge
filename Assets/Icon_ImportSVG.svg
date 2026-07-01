@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><svg id="_Слой_1" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 197.11 126.09"><defs><style>
+      .st0 {
+        fill: url(#_Безымянный_градиент_4);
+      }
+
+      .st1 {
+        fill: url(#_Безымянный_градиент_5);
+      }
+
+      .st2 {
+        fill: #27ae60;
+      }
+
+      .st3, .st4 {
+        isolation: isolate;
+      }
+
+      .st5 {
+        fill: none;
+        stroke: #0a0a0a;
+        stroke-linecap: round;
+        stroke-width: 5px;
+      }
+
+      .st6 {
+        fill: url(#_Безымянный_градиент_2);
+      }
+
+      .st4 {
+        fill: #a29bfe;
+        font-family: Arial-BoldMT, Arial;
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: .04em;
+      }
+
+      .st7 {
+        fill: url(#_Безымянный_градиент);
+      }
+
+      .st8 {
+        fill: #0a0a0a;
+      }
+
+      .st9 {
+        fill: url(#_Безымянный_градиент_3);
+      }
+
+      .st10 {
+        fill: url(#_Безымянный_градиент_6);
+      }
+    </style><linearGradient id="_Безымянный_градиент" data-name="Безымянный градиент" x1="-380.79" y1="-22.32" x2="-379.79" y2="-21.32" gradientTransform="translate(54078 2029.07) scale(142 90)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#7d6ff0" /><stop offset="1" stop-color="#5847c9" /></linearGradient><linearGradient id="_Безымянный_градиент_2" data-name="Безымянный градиент 2" x1="-373.06" y1="-1.12" x2="-372.06" y2="-.12" gradientTransform="translate(8332.47 46.94) scale(22)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#6c5ce7" /><stop offset="1" stop-color="#4a3fa8" /></linearGradient><linearGradient id="_Безымянный_градиент_3" data-name="Безымянный градиент 3" x1="-380.88" y1="-22.34" x2="-379.88" y2="-21.34" gradientTransform="translate(54084 2037.07) scale(142 90)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8e84f5" /><stop offset="1" stop-color="#6c5ce7" /></linearGradient><linearGradient id="_Безымянный_градиент_4" data-name="Безымянный градиент 4" x1="-373.59" y1="-1.19" x2="-372.59" y2="-.19" gradientTransform="translate(8338.47 54.94) scale(22)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#7d6ff0" /><stop offset="1" stop-color="#5847c9" /></linearGradient><linearGradient id="_Безымянный_градиент_5" data-name="Безымянный градиент 5" x1="-380.82" y1="-22.34" x2="-379.82" y2="-21.34" gradientTransform="translate(54090 2045.07) scale(142 90)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#a29bfe" /><stop offset="1" stop-color="#7d6ff0" /></linearGradient><linearGradient id="_Безымянный_градиент_6" data-name="Безымянный градиент 6" x1="-373.26" y1="-1.21" x2="-372.26" y2="-.21" gradientTransform="translate(8344.47 62.94) scale(22)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8e84f5" /><stop offset="1" stop-color="#6c5ce7" /></linearGradient></defs><g><path class="st7" d="M9.79,17.66h120l22,22v60c0,5.33-2.67,8-8,8H17.79c-5.33,0-8-2.67-8-8V25.66c0-5.33,2.67-8,8-8,0,0-8,0-8,0Z" /><path class="st6" d="M129.79,17.66v15c0,4.67,2.33,7,7,7h15s-22-22-22-22Z" /></g><g><path class="st9" d="M4.04,24.05h120l22,22v60c0,5.33-2.67,8-8,8H12.04c-5.33,0-8-2.67-8-8V32.05c0-5.33,2.67-8,8-8H4.04Z" /><path class="st0" d="M124.04,24.05v15c0,4.67,2.33,7,7,7h15s-22-22-22-22Z" /></g><g><path class="st1" d="M17.45,31.66h120l22,22v60c0,5.33-2.67,8-8,8H25.45c-5.33,0-8-2.67-8-8V39.66c0-5.33,2.67-8,8-8h-8Z" /><path class="st10" d="M137.45,31.66v15c0,4.67,2.33,7,7,7h15l-22-22Z" /><rect class="st8" x="63.45" y="65.66" width="60" height="32" rx="6" ry="6" /><g class="st3"><text class="st4" transform="translate(77.91 87.66)"><tspan x="0" y="0">SVG</tspan></text></g></g><g><circle class="st2" cx="167.98" cy="21.29" r="18.36" /><line class="st5" x1="167.98" y1="12.11" x2="167.98" y2="30.47" /><line class="st5" x1="158.8" y1="21.29" x2="177.16" y2="21.29" /></g></svg>

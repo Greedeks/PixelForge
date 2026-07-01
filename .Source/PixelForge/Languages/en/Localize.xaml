@@ -10,37 +10,53 @@
     <v:String x:Key="rbtn_OverwriteOriginal">Replace original</v:String>
     <v:String x:Key="rbtn_OptimizeImmediately">Optimize SVG immediately</v:String>
     <v:String x:Key="rbtn_KeepOriginal">Keep original file</v:String>
-    
-    <v:String x:Key="title_OutputFolder">Output Folder</v:String>
-    <v:String x:Key="link_ChangeFolder">Change...</v:String>
-    <v:String x:Key="desc_OverwriteOriginal">The file on disk will be overwritten. This action cannot be undone.</v:String>
-    <v:String x:Key="desc_TempFilesFallback">Files dropped from archives or other temporary sources will always be saved to the selected folder, regardless of the option above.</v:String>
-    <v:String x:Key="title_XamlConversion">XAML Conversion</v:String>
-    <v:String x:Key="desc_OptimizeImmediately">Automatically runs the optimizer when files are added to the SVG to XAML converter.</v:String>
 
-    <v:String x:Key="btn_SaveAll">Save all</v:String>
-    <v:String x:Key="btn_ProcessAll">Process all</v:String>
-    <v:String x:Key="btn_ClearAll">Clear all</v:String>
     <v:String x:Key="btn_Copy">Copy</v:String>
     <v:String x:Key="btn_OK">OK</v:String>
-    
-    <v:String x:Key="dropzone_Title">Drop files or folder here</v:String>
-    <v:String x:Key="dropzone_Sub">or click to select files</v:String>
-    <v:String x:Key="status_Processing">Optimizing...</v:String>
+    <v:String x:Key="btn_ProcessAll">Process all</v:String>
+    <v:String x:Key="btn_SaveAll">Save all</v:String>
+    <v:String x:Key="btn_ClearAll">Clear all</v:String>
+
+    <v:String x:Key="menu_OpenFiles">Open files…</v:String>
+    <v:String x:Key="menu_Close">Close</v:String>
+    <v:String x:Key="menu_CloseToLeft">Close to the Left</v:String>
+    <v:String x:Key="menu_CloseToRight">Close to the Right</v:String>
+    <v:String x:Key="menu_CloseOthers">Close Others</v:String>
+    <v:String x:Key="menu_CloseAll">Close All</v:String>
+
+    <v:String x:Key="link_ChangeFolder">Change...</v:String>
+    <v:String x:Key="toast_Copy">Copied!</v:String>
+
+    <v:String x:Key="title_OutputFolder">Output Folder</v:String>
+    <v:String x:Key="title_XamlConversion">XAML Conversion</v:String>
+    <v:String x:Key="title_FileDamaged">Invalid SVG file</v:String>
+    <v:String x:Key="title_SvgToXaml">Convert SVG files into clean XAML</v:String>
+
     <v:String x:Key="label_Files">Files</v:String>
     <v:String x:Key="label_Queue">In queue</v:String>
     <v:String x:Key="label_Processed">Processed</v:String>
     <v:String x:Key="label_Saved">Saved</v:String>
+    <v:String x:Key="label_Designed">Designed Size</v:String>
+    <v:String x:Key="label_ActualSize">Actual size</v:String>
+    <v:String x:Key="label_Stretch">Stretch</v:String>
+    <v:String x:Key="label_ConversionError">Failed to convert SVG to XAML</v:String>
+
+    <v:String x:Key="dropzone_Title">Drop files or folders here</v:String>
+    <v:String x:Key="dropzone_Title_SVG">Drop SVG files or folders here</v:String>
+    <v:String x:Key="dropzone_Sub">or click to browse</v:String>
+
+    <v:String x:Key="desc_OverwriteOriginal">The file on disk will be overwritten. This action cannot be undone.</v:String>
+    <v:String x:Key="desc_TempFilesFallback">Files dropped from archives or other temporary sources will always be saved to the selected folder, regardless of the option above.</v:String>
+    <v:String x:Key="desc_OptimizeImmediately">Automatically runs the optimizer when files are added to the SVG to XAML converter.</v:String>
+    <v:String x:Key="desc_FileDamaged" xml:space="preserve">The file may contain invalid or corrupted SVG code.
+        Please check the file and try again.</v:String>
+
+    <v:String x:Key="stat_Processing">Optimizing...</v:String>
     <v:String x:Key="stat_Processed">PROCESSED</v:String>
     <v:String x:Key="stat_Saved">SAVED</v:String>
     <v:String x:Key="stat_AvgCompression">AVG COMPRESSION</v:String>
-    <v:String x:Key="toast_Copy">Copied!</v:String>
 
     <v:String x:Key="msg_SaveError">Failed to save</v:String>
     <v:String x:Key="msg_OptimizationError">Optimization error</v:String>
 
-    <v:String x:Key="label_Designed">Original size</v:String>
-    <v:String x:Key="label_ActualSize">Actual size</v:String>
-    <v:String x:Key="label_Stretch">Stretch</v:String>
-    
 </ResourceDictionary>

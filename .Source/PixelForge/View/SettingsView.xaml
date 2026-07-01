@@ -13,7 +13,6 @@
     <Grid>
         <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
             <uc:FlowPanel Orientation="Vertical" HorizontalAlignment="Stretch" ContentAlignment="Stretch" Margin="5" VerticalSpacing="7">
-                
                 <Grid>
                     <Border CornerRadius="8" Opacity="0.5" Background="{StaticResource Brush_ShadowOverlay}" IsHitTestVisible="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <Border.RenderTransform>
@@ -24,13 +23,7 @@
                     <Border Background="{StaticResource Background_Card}" BorderBrush="{StaticResource Border_Default}" BorderThickness="1" CornerRadius="8" Padding="16">
                         <StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
-                                <Image Height="20" Width="20">
-                                    <Image.Style>
-                                        <Style TargetType="{x:Type Image}">
-                                            <Setter Property="Source" Value="{StaticResource Icon_Folder}"/>
-                                        </Style>
-                                    </Image.Style>
-                                </Image>
+                                <Image Height="20" Width="20" Source="{StaticResource Icon_Folder}"/>
                                 <TextBlock Text="{DynamicResource title_OutputFolder}" Margin="8,0,0,0" Foreground="{StaticResource Primary_Accent_Text}" FontSize="14" VerticalAlignment="Center"/>
                             </StackPanel>
 
@@ -40,18 +33,18 @@
                                 <RadioButton IsChecked="{Binding IsNextToOriginal, Mode=TwoWay}" GroupName="OutputFolderGroup">
                                     <StackPanel>
                                         <WrapPanel>
-                                            <TextBlock Text="{DynamicResource rbtn_NextToOriginal}" Foreground="{StaticResource Primary_Accent_Text}"/>
+                                            <TextBlock Text="{DynamicResource rbtn_NextToOriginal}" Foreground="{StaticResource Primary_Accent_Text}" TextWrapping="Wrap" TextTrimming="WordEllipsis"/>
                                         </WrapPanel>
                                         <TextBlock Text="...\compressed\" Foreground="{StaticResource Inactive_Text}" FontSize="12" Margin="0,2,0,0"/>
                                     </StackPanel>
                                 </RadioButton>
 
-                                <RadioButton  IsChecked="{Binding IsCustomFolder, Mode=TwoWay}" GroupName="OutputFolderGroup" Margin="0,12,0,0">
+                                <RadioButton IsChecked="{Binding IsCustomFolder, Mode=TwoWay}" GroupName="OutputFolderGroup" Margin="0,12,0,0">
                                     <StackPanel>
-                                        <TextBlock Text="{DynamicResource rbtn_CustomFolder}" Foreground="{StaticResource Primary_Accent_Text}"/>
+                                        <TextBlock Text="{DynamicResource rbtn_CustomFolder}" Foreground="{StaticResource Primary_Accent_Text}" TextWrapping="Wrap" TextTrimming="WordEllipsis"/>
                                         <WrapPanel Margin="0,2,0,0">
-                                            <TextBlock Foreground="{StaticResource Inactive_Text}" FontSize="12">
-                                                <Run Text="{Binding CustomFolderPath}" />
+                                            <TextBlock Foreground="{StaticResource Inactive_Text}" FontSize="12" TextWrapping="Wrap" TextTrimming="WordEllipsis">
+                                                <Run Text="{Binding CustomFolderPath}"/>
                                                 <Hyperlink Command="{Binding SelectFolderCommand}" Foreground="{StaticResource Accent_Text}">
                                                     <Run Text="{DynamicResource link_ChangeFolder}"/>
                                                 </Hyperlink>
@@ -60,26 +53,26 @@
                                     </StackPanel>
                                 </RadioButton>
 
-                                <RadioButton  IsChecked="{Binding IsOverwriteOriginal, Mode=TwoWay}" GroupName="OutputFolderGroup" Margin="0,12,0,0">
+                                <RadioButton IsChecked="{Binding IsOverwriteOriginal, Mode=TwoWay}" GroupName="OutputFolderGroup" Margin="0,12,0,0">
                                     <StackPanel>
-                                        <TextBlock Text="{DynamicResource rbtn_OverwriteOriginal}" Foreground="{StaticResource Primary_Accent_Text}"/>
-                                        <TextBlock Text="{DynamicResource desc_OverwriteOriginal}" Foreground="{StaticResource Inactive_Text}" FontSize="12" Margin="0,2,0,0"/>
+                                        <TextBlock Text="{DynamicResource rbtn_OverwriteOriginal}" Foreground="{StaticResource Primary_Accent_Text}" TextWrapping="Wrap" TextTrimming="WordEllipsis"/>
+                                        <TextBlock Text="{DynamicResource desc_OverwriteOriginal}" Foreground="{StaticResource Inactive_Text}" FontSize="12" Margin="0,2,0,0" TextWrapping="Wrap" TextTrimming="WordEllipsis"/>
                                     </StackPanel>
                                 </RadioButton>
 
                                 <Rectangle Height="1" Fill="{StaticResource Border_Default}" Margin="0,16,0,16"/>
 
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Height="20" Width="20">
+                                <DockPanel LastChildFill="True">
+                                    <Image Height="20" Width="20" DockPanel.Dock="Left" VerticalAlignment="Center">
                                         <Image.Style>
                                             <Style TargetType="{x:Type Image}">
                                                 <Setter Property="Source" Value="{StaticResource Icon_Info}"/>
                                             </Style>
                                         </Image.Style>
                                     </Image>
-                                    <TextBlock Text="{DynamicResource desc_TempFilesFallback}" Margin="8,0,0,0" Foreground="{StaticResource Primary_Accent_Text}" FontSize="12" VerticalAlignment="Center"/>
-                                </StackPanel>
-                                
+                                    <TextBlock Text="{DynamicResource desc_TempFilesFallback}" Margin="8,0,0,0" Foreground="{StaticResource Primary_Accent_Text}"  FontSize="12" VerticalAlignment="Center" TextWrapping="Wrap" TextTrimming="WordEllipsis"/>
+                                </DockPanel>
+
                             </StackPanel>
                         </StackPanel>
                     </Border>
@@ -110,13 +103,13 @@
                             <StackPanel>
                                 <RadioButton IsChecked="{Binding IsOptimizeImmediately, Mode=TwoWay}" GroupName="ImportSVG">
                                     <StackPanel>
-                                        <TextBlock Text="{DynamicResource rbtn_OptimizeImmediately}" Foreground="{StaticResource Primary_Accent_Text}"/>
-                                        <TextBlock Text="{DynamicResource desc_OptimizeImmediately}" Foreground="{StaticResource Inactive_Text}" FontSize="12" Margin="0,2,0,0"/>
+                                        <TextBlock Text="{DynamicResource rbtn_OptimizeImmediately}" Foreground="{StaticResource Primary_Accent_Text}" TextWrapping="Wrap" TextTrimming="WordEllipsis"/>
+                                        <TextBlock Text="{DynamicResource desc_OptimizeImmediately}" Foreground="{StaticResource Inactive_Text}" FontSize="12" Margin="0,2,0,0" TextWrapping="Wrap" TextTrimming="WordEllipsis"/>
                                     </StackPanel>
                                 </RadioButton>
 
                                 <RadioButton  IsChecked="{Binding IsKeepOriginal, Mode=TwoWay}" GroupName="ImportSVG" Margin="0,12,0,0">
-                                    <TextBlock Text="{DynamicResource rbtn_KeepOriginal}" Foreground="{StaticResource Primary_Accent_Text}"/>
+                                    <TextBlock Text="{DynamicResource rbtn_KeepOriginal}" Foreground="{StaticResource Primary_Accent_Text}" TextWrapping="Wrap" TextTrimming="WordEllipsis"/>
                                 </RadioButton>
 
                             </StackPanel>

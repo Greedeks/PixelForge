@@ -26,7 +26,7 @@ namespace PixelForge
 
         private void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
-            MessageWindowManager.Show(e.Exception);
+            MessageManager.Show(e.Exception);
             e.Handled = true;
         }
 
@@ -34,13 +34,13 @@ namespace PixelForge
         {
             if (e.ExceptionObject is Exception ex)
             {
-                MessageWindowManager.Show(ex);
+                MessageManager.Show(ex);
             }
         }
 
         private void OnUnobservedTaskException(object? sender, UnobservedTaskExceptionEventArgs e)
         {
-            MessageWindowManager.Show(e.Exception);
+            MessageManager.Show(e.Exception);
             e.SetObserved();
         }
     }

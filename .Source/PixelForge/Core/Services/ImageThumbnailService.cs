@@ -1,4 +1,5 @@
 using System.IO;
+using System.Text;
 using System.Windows.Media.Imaging;
 using PixelForge.Core.Providers.Images;
 using SkiaSharp;
@@ -18,9 +19,9 @@ namespace PixelForge.Core.Services
 
                 return ext switch
                 {
-                    ".svg" => LoadSvgThumbnail(source, decodePixelWidth),
-                    ".webp" => LoadWebpThumbnail(source, decodePixelWidth),
-                    _ => LoadThumbnail(source, decodePixelWidth)
+                    ".svg" => RenderSvgThumbnail(source, decodePixelWidth),
+                    ".webp" => RenderWebpThumbnail(source, decodePixelWidth),
+                    _ => RenderThumbnail(source, decodePixelWidth)
                 };
             }
             catch
@@ -29,7 +30,7 @@ namespace PixelForge.Core.Services
             }
         }
 
-        private static BitmapSource? LoadThumbnail(IImageSource source, int decodePixelWidth)
+        private static BitmapSource? RenderThumbnail(IImageSource source, int decodePixelWidth)
         {
             using Stream stream = source.OpenRead();
 
@@ -44,7 +45,7 @@ namespace PixelForge.Core.Services
             return bmp;
         }
 
-        private static BitmapSource? LoadWebpThumbnail(IImageSource source, int decodePixelWidth)
+        private static BitmapSource? RenderWebpThumbnail(IImageSource source, int decodePixelWidth)
         {
             using Stream stream = source.OpenRead();
             using SKBitmap? original = SKBitmap.Decode(stream);
@@ -66,7 +67,7 @@ namespace PixelForge.Core.Services
             return EncodeToBitmapSource(bitmapToEncode);
         }
 
-        private static BitmapSource? LoadSvgThumbnail(IImageSource source, int decodePixelWidth)
+        private static BitmapSource? RenderSvgThumbnail(IImageSource source, int decodePixelWidth)
         {
             using Stream stream = source.OpenRead();
             using SKSvg svg = new();
@@ -100,7 +101,43 @@ namespace PixelForge.Core.Services
             return EncodeToBitmapSource(skBitmap);
         }
 
-        private static BitmapSource? EncodeToBitmapSource(SKBitmap skBitmap)
+        internal static BitmapSource RenderThumbnailFromSvgText(string svgText, double viewBoxX, double viewBoxY, double viewBoxWidth, double viewBoxHeight)
+        {
+            using SKSvg svg = new();
+
+            using MemoryStream mStream = new(Encoding.UTF8.GetBytes(svgText));
+            SKPicture picture = svg.Load(mStream) ?? throw new InvalidOperationException("Svg.Skia не смог загрузить SVG для рендера превью.");
+            SKRect pictureBounds = picture.CullRect;
+
+            double sourceWidth = viewBoxWidth > 0 ? viewBoxWidth : pictureBounds.Width;
+            double sourceHeight = viewBoxHeight > 0 ? viewBoxHeight : pictureBounds.Height;
+            double sourceX = viewBoxWidth > 0 ? viewBoxX : pictureBounds.Left;
+            double sourceY = viewBoxHeight > 0 ? viewBoxY : pictureBounds.Top;
+
+            if (double.IsNaN(sourceWidth) || sourceWidth <= 0)
+            {
+                sourceWidth = DefaultThumbnailSize;
+            }
+
+            if (double.IsNaN(sourceHeight) || sourceHeight <= 0)
+            {
+                sourceHeight = DefaultThumbnailSize;
+            }
+
+            float scale = (float)(DefaultThumbnailSize / Math.Max(sourceWidth, sourceHeight));
+
+            using SKBitmap bitmap = new(DefaultThumbnailSize, DefaultThumbnailSize, SKColorType.Rgba8888, SKAlphaType.Premul);
+            using SKCanvas canvas = new(bitmap);
+            canvas.Clear(SKColors.Transparent);
+            canvas.Scale(scale);
+            canvas.Translate((float)-sourceX, (float)-sourceY);
+            canvas.DrawPicture(picture);
+            canvas.Flush();
+
+            return EncodeToBitmapSource(bitmap);
+        }
+
+        private static BitmapSource EncodeToBitmapSource(SKBitmap skBitmap)
         {
             using SKData data = skBitmap.Encode(SKEncodedImageFormat.Png, 100);
             using MemoryStream stream = new();

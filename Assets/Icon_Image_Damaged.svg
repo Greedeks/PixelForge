@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?><svg id="Image" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 190 190"><defs><style>
+      .st0 {
+        fill: none;
+        stroke: #0a0a0a;
+        stroke-linecap: round;
+        stroke-miterlimit: 3.6;
+        stroke-width: 8.1px;
+      }
+
+      .st1 {
+        isolation: isolate;
+        opacity: .55;
+      }
+
+      .st1, .st2 {
+        fill: #0a0a0a;
+      }
+
+      .st3 {
+        fill: #d64545;
+      }
+
+      .st4 {
+        fill: url(#_Безымянный_градиент_3);
+      }
+    </style><linearGradient id="_Безымянный_градиент_3" data-name="Безымянный градиент 3" x1="-396.48" y1="501.18" x2="-395.48" y2="500.18" gradientTransform="translate(67808.19 67675.52) scale(171 -135)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#a29bfe" /><stop offset="1" stop-color="#6c5ce7" /></linearGradient></defs><rect class="st4" x="9.5" y="15.8" width="171" height="135" rx="12.6" ry="12.6" /><circle class="st1" cx="47.3" cy="53.6" r="14.4" /><path class="st1" d="M20.3,132.8l38.7-43.2,27,25.2,29.7-32.4,54,59.4-149.4-9Z" /><line class="st0" x1="14" y1="20.3" x2="176" y2="146.3" /><circle class="st3" cx="147.2" cy="149.9" r="24.3" /><rect class="st2" x="142.7" y="135.5" width="9" height="18" rx="2.7" ry="2.7" /><circle class="st2" cx="147.2" cy="160.7" r="3.6" /></svg>

@@ -1,5 +1,6 @@
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Shapes;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Editing;
 using ICSharpCode.AvalonEdit.Highlighting;
@@ -21,13 +22,14 @@ namespace PixelForge.Assets.UserControls
         {
             SyntaxHighlighting = BuildHighlighting();
             ShowLineNumbers = true;
-            TextArea.LeftMargins.Add(new System.Windows.Shapes.Rectangle { Width = 15 });
+            TextArea.LeftMargins.Add(new Rectangle { Width = 15 });
             IsReadOnly = true;
             WordWrap = false;
             Options.EnableHyperlinks = false;
             Options.EnableEmailHyperlinks = false;
+            Foreground = new SolidColorBrush(GetColor("Syntax_Default"));
+            Background = Brushes.Transparent;
         }
-
         private static void OnCodeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             XmlCodeViewer viewer = (XmlCodeViewer)d;

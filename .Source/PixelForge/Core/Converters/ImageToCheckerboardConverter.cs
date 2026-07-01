@@ -1,3 +1,4 @@
+using System.Buffers;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
@@ -6,53 +7,73 @@ using System.Windows.Media.Imaging;
 
 namespace PixelForge.Core.Converters
 {
-    public class ImageToCheckerboardConverter : IMultiValueConverter
+    public sealed class ImageToCheckerboardConverter : IMultiValueConverter
     {
+        private const int SampleSize = 32;
+        private const byte AlphaThreshold = 10;
+        private const double LuminanceThreshold = 0.5;
+
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if (values[0] is BitmapSource bitmap)
+            if (values.Length == 0 || values[0] is not BitmapSource bitmap)
             {
-                double lum = GetAverageLuminance(bitmap);
-                string key = lum > 0.5 ? "CheckerboardDark" : "CheckerboardLight";
-                return Application.Current.Resources[key] ?? DependencyProperty.UnsetValue;
+                return DependencyProperty.UnsetValue;
             }
-            return DependencyProperty.UnsetValue;
+
+            double luminance = GetAverageLuminance(bitmap);
+
+            return Application.Current.Resources[luminance > LuminanceThreshold ? "CheckerboardDark" : "CheckerboardLight"];
         }
 
         private static double GetAverageLuminance(BitmapSource source)
         {
-            double scaleX = Math.Min(32.0 / source.PixelWidth, 1.0);
-            double scaleY = Math.Min(32.0 / source.PixelHeight, 1.0);
-            TransformedBitmap scaled = new(source, new ScaleTransform(scaleX, scaleY));
-            FormatConvertedBitmap converted = new(scaled, PixelFormats.Bgra32, null, 0);
+            BitmapSource bitmap = source;
 
-            int w = converted.PixelWidth, h = converted.PixelHeight;
-            int stride = w * 4;
-            byte[] px = new byte[h * stride];
-            converted.CopyPixels(px, stride, 0);
-
-            double total = 0;
-            int count = 0;
-
-            for (int i = 0; i < px.Length; i += 4)
+            if (bitmap.PixelWidth > SampleSize || bitmap.PixelHeight > SampleSize)
             {
-                byte a = px[i + 3];
-                if (a < 10)
-                {
-                    continue;
-                }
+                double scale = Math.Min((double)SampleSize / bitmap.PixelWidth, (double)SampleSize / bitmap.PixelHeight);
 
-                double r = px[i + 2] / 255.0;
-                double g = px[i + 1] / 255.0;
-                double b = px[i + 0] / 255.0;
-
-                total += 0.2126 * r + 0.7152 * g + 0.0722 * b;
-                count++;
+                bitmap = new TransformedBitmap(bitmap, new ScaleTransform(scale, scale));
             }
 
-            return count > 0 ? total / count : 0.5;
+            if (bitmap.Format != PixelFormats.Bgra32)
+            {
+                bitmap = new FormatConvertedBitmap(bitmap, PixelFormats.Bgra32, null, 0);
+            }
+
+            int stride = bitmap.PixelWidth * 4;
+            int requiredSize = stride * bitmap.PixelHeight;
+            byte[] pixels = ArrayPool<byte>.Shared.Rent(requiredSize);
+
+            try
+            {
+                bitmap.CopyPixels(pixels, stride, 0);
+
+                double total = 0;
+                double weight = 0;
+
+                Span<byte> span = pixels.AsSpan(0, requiredSize);
+
+                for (int i = 0; i < span.Length; i += 4)
+                {
+                    byte rawAlpha = span[i + 3];
+                    if (rawAlpha < AlphaThreshold)
+                    {
+                        continue;
+                    }
+                    double alpha = rawAlpha / 255.0;
+
+                    double luminance = span[i + 2] * 0.2126 + span[i + 1] * 0.7152 + span[i + 0] * 0.0722;
+
+                    total += luminance * alpha;
+                    weight += alpha;
+                }
+
+                return weight > 0 ? total / (255.0 * weight) : 0.5;
+            }
+            finally { ArrayPool<byte>.Shared.Return(pixels); }
         }
 
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture) => throw new NotImplementedException();
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture) => throw new NotSupportedException();
     }
 }

@@ -32,7 +32,7 @@ namespace PixelForge.Helpers.ImageOptimization
             byte[]? bestBytes = null;
 
             try { bestBytes = EncodePngLossless(source); }
-            catch (Exception ex) { MessageWindowManager.Show(ex); }
+            catch (Exception ex) { MessageManager.Show(ex); }
 
             try
             {
@@ -45,7 +45,7 @@ namespace PixelForge.Helpers.ImageOptimization
                     }
                 }
             }
-            catch (Exception ex) { MessageWindowManager.Show(ex); }
+            catch (Exception ex) { MessageManager.Show(ex); }
 
             return ProcessResultOrFallback(bestBytes, source, ".png", sizeBefore);
         }
@@ -111,7 +111,7 @@ namespace PixelForge.Helpers.ImageOptimization
                         }
                     }
                 }
-                catch (Exception ex) { MessageWindowManager.Show(ex); }
+                catch (Exception ex) { MessageManager.Show(ex); }
             });
 
             return ProcessResultOrFallback(bestBytes, source, ".jpg", sizeBefore);
@@ -152,7 +152,7 @@ namespace PixelForge.Helpers.ImageOptimization
                         }
                     }
                 }
-                catch (Exception ex) { MessageWindowManager.Show(ex); }
+                catch (Exception ex) { MessageManager.Show(ex); }
             });
 
             return ProcessResultOrFallback(bestBytes, source, ".webp", sizeBefore);

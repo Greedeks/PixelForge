@@ -57,6 +57,7 @@
     <PackageReference Include="AvalonEdit" Version="6.3.1.120" />
     <PackageReference Include="Magick.NET-Q16-AnyCPU" Version="14.14.0" />
     <PackageReference Include="Ookii.Dialogs.Wpf" Version="5.0.1" />
+    <PackageReference Include="SharpVectors.Wpf" Version="1.8.5" />
     <PackageReference Include="SkiaSharp" Version="4.148.0" />
     <PackageReference Include="Svg.Skia" Version="5.1.1" />
   </ItemGroup>

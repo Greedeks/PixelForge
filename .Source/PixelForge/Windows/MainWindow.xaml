@@ -8,7 +8,7 @@
         xmlns:local="clr-namespace:PixelForge"
         mc:Ignorable="d" Background="{StaticResource Background_Main}" BorderBrush="{StaticResource Border_Default}" BorderThickness="1"
         interop:WindowAttributes.CaptionColor="{StaticResource Background_Page}" FontFamily="{StaticResource AA Stetica}"
-        Title="PixelForge" Height="450" Width="800" IsTabStop="False" KeyboardNavigation.TabNavigation="None" FocusVisualStyle="{x:Null}" SnapsToDevicePixels="True" UseLayoutRounding="True">
+        Title="PixelForge" Height="450" Width="800" MinWidth="400" MinHeight="250" IsTabStop="False" KeyboardNavigation.TabNavigation="None" FocusVisualStyle="{x:Null}" SnapsToDevicePixels="True" UseLayoutRounding="True">
     <Window.DataContext>
         <vm:MainViewModel/>
     </Window.DataContext>
@@ -44,8 +44,6 @@
                         </Grid>
                     </RadioButton>
 
-                    <Rectangle Height="1" Fill="{StaticResource Border_Default}" Margin="10,2"/>
-
                     <RadioButton Style="{StaticResource RbtnNavigation}" Command="{Binding NavigateToSvgToXamlCommand}">
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -60,8 +58,6 @@
                             <TextBlock Grid.Column="1" Text="{DynamicResource rbtn_SvgToXaml}" FontSize="14" VerticalAlignment="Center"/>
                         </Grid>
                     </RadioButton>
-
-                    <Rectangle Height="1" Fill="{StaticResource Border_Default}" Margin="10,2"/>
 
                     <RadioButton Style="{StaticResource RbtnNavigation}" Command="{Binding NavigateToSettingsCommand}">
                         <Grid>

@@ -3,7 +3,7 @@ using PixelForge.Windows;
 
 namespace PixelForge.Helpers.Managers
 {
-    internal sealed class MessageWindowManager
+    internal sealed class MessageManager
     {
         internal static void Show(Exception ex, MessageWindowType type = MessageWindowType.UnknownError) => Application.Current.Dispatcher.Invoke(() => new MessageWindow(ex, type) { Owner = Application.Current.MainWindow }.ShowDialog());
 

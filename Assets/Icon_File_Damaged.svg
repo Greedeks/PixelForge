@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><svg id="_Слой_1" data-name="Слой_1" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 300 250"><defs><style>
+      .st0, .st1, .st2, .st3, .st4 {
+        fill: none;
+      }
+
+      .st0, .st2, .st3, .st4 {
+        stroke-linecap: round;
+      }
+
+      .st0, .st3 {
+        stroke-linejoin: round;
+      }
+
+      .st0, .st3, .st4 {
+        stroke: #0a0a0a;
+      }
+
+      .st0, .st4 {
+        stroke-width: 8px;
+      }
+
+      .st2 {
+        stroke: #6c5ce7;
+        stroke-width: 3px;
+      }
+
+      .st5 {
+        clip-path: url(#clippath-1);
+      }
+
+      .st3 {
+        opacity: .35;
+        stroke-width: 2px;
+      }
+
+      .st3, .st6 {
+        isolation: isolate;
+      }
+
+      .st7 {
+        fill: url(#_Безымянный_градиент_2);
+      }
+
+      .st4 {
+        stroke-miterlimit: 4;
+      }
+
+      .st8 {
+        fill: url(#_Безымянный_градиент);
+      }
+
+      .st6 {
+        fill: #a29bfe;
+        opacity: .5;
+      }
+
+      .st9 {
+        fill: #0a0a0a;
+      }
+
+      .st10 {
+        fill: #d64545;
+      }
+
+      .st11 {
+        fill: url(#_Безымянный_градиент_3);
+      }
+
+      .st12 {
+        clip-path: url(#clippath);
+      }
+
+      .st13 {
+        opacity: .8;
+      }
+    </style><clipPath id="clippath"><polygon class="st1" points="57.95 30.42 177.91 27.28 213.81 61.35 214.13 73.34 198.98 67.74 187.27 79.05 172.01 69.44 157.36 82.83 142.05 71.23 127.34 82.62 112.01 70.02 97.32 82.4 82.04 71.8 67.31 82.19 59.1 74.4 57.95 30.42" /></clipPath><linearGradient id="_Безымянный_градиент" data-name="Безымянный градиент" x1="-152.85" y1="543.13" x2="-151.85" y2="542.13" gradientTransform="translate(26592.49 108550.74) rotate(-1.5) scale(155 -201)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#a29bfe" /><stop offset="1" stop-color="#6c5ce7" /></linearGradient><linearGradient id="_Безымянный_градиент_2" data-name="Безымянный градиент 2" x1="-153.3" y1="537.72" x2="-152.3" y2="536.72" gradientTransform="translate(6026.84 18708.39) rotate(-1.5) scale(35 -35)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#7d6ff0" /><stop offset="1" stop-color="#5847c9" /></linearGradient><clipPath id="clippath-1"><path class="st1" d="M64.87,78.06l7.86,8.14,15.17-9.74,14.81,11.26,15.21-11.74,14.77,13.26,15.19-10.74,14.79,12.26,15.22-12.74,14.82,10.26,12.19-10.79,14.89,6.26-2.55,145.98c-.09,5.33-2.81,7.95-8.14,7.86l-138.98-2.43c-5.33-.09-7.95-2.81-7.86-8.14l2.6-148.98Z" /></clipPath><linearGradient id="_Безымянный_градиент_3" data-name="Безымянный градиент 3" x1="-152.78" y1="543.13" x2="-151.78" y2="542.13" gradientTransform="translate(21831.65 109608.02) rotate(1) scale(155 -201)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#a29bfe" /><stop offset="1" stop-color="#6c5ce7" /></linearGradient></defs><g class="st13"><line class="st2" x1="226.5" y1="12.39" x2="226.5" y2="44.39" /><line class="st2" x1="249.5" y1="21.39" x2="270.5" y2="40.39" /><line class="st2" x1="262.5" y1="44.39" x2="290.5" y2="44.39" /><line class="st2" x1="254.5" y1="72.39" x2="277.5" y2="86.39" /></g><circle class="st6" cx="36.5" cy="112.39" r="5" /><circle class="st6" cx="14.5" cy="154.39" r="5" /><g class="st12"><g><path class="st8" d="M57.95,30.42l119.96-3.14,35.9,34.07,4.35,165.94-154.95,4.06-5.26-200.93Z" /><path class="st7" d="M177.91,27.28l.71,26.99c.14,5.33,2.88,7.93,8.21,7.79l26.99-.71-35.9-34.07Z" /></g></g><g class="st5"><g><path class="st11" d="M65.64,34.07l119.98,2.09,34.38,35.61-2.76,157.98c-.09,5.33-2.81,7.95-8.14,7.86l-138.98-2.43c-5.33-.09-7.95-2.81-7.86-8.14l3.37-192.97Z" /><g><path class="st0" d="M96.19,117.61l-17.4,22.7,16.6,23.29" /><path class="st0" d="M147.18,118.5l16.6,23.29-17.4,22.7" /></g><line class="st4" x1="132.34" y1="109.24" x2="111.23" y2="172.89" /></g></g><path class="st3" d="M64.5,80.39l5,4,15-10,15,11,15-12,15,13,15-11,15,12,15-13,15,10,12-11,12,5" /><circle class="st10" cx="174.5" cy="201.39" r="27" /><rect class="st9" x="169.5" y="185.39" width="10" height="20" rx="3" ry="3" /><circle class="st9" cx="174.5" cy="213.39" r="4" /></svg>

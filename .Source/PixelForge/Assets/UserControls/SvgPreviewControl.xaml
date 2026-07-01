@@ -1,9 +1,9 @@
-<UserControl x:Class="PixelForge.Assets.UserControls.SvgPreviewPanel"
+<UserControl x:Class="PixelForge.Assets.UserControls.SvgPreviewControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-              xmlns:conv="clr-namespace:PixelForge.Core.Converters"
+             xmlns:conv="clr-namespace:PixelForge.Core.Converters"
              xmlns:local="clr-namespace:PixelForge.Assets.UserControls"
              mc:Ignorable="d" x:Name="Root"
              d:DesignHeight="450" d:DesignWidth="900"
@@ -13,8 +13,7 @@
         <conv:BoolToVisibilityConverter x:Key="BoolToVisibility"/>
     </UserControl.Resources>
 
-    <Border Background="{StaticResource Background_Main}"
-            CornerRadius="0">
+    <Border Background="{StaticResource Background_Main}" CornerRadius="0">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -22,7 +21,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Grid Grid.Column="0" Margin="5">
+            <Grid Grid.Column="0" Margin="5,0,5,5">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
@@ -35,9 +34,8 @@
                         </MultiBinding>
                     </Border.Background>
                     <Grid>
-                        <Image x:Name="PreviewImage" Source="{Binding Thumbnail, ElementName=Root}" Stretch="{Binding ImageStretch, ElementName=Root}"  Margin="6"/>
-                        <Border Width="{Binding ActualWidth, ElementName=PreviewImage}" Height="{Binding ActualHeight, ElementName=PreviewImage}" HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False" Visibility="{Binding IsGuidesVisible, ElementName=Root,
-                             Converter={StaticResource BoolToVisibility}}">
+                        <Image x:Name="PreviewImage" Source="{Binding DrawingImage, ElementName=Root}" Stretch="{Binding ImageStretch, ElementName=Root}" Margin="6"/>
+                        <Border Width="{Binding ActualWidth, ElementName=PreviewImage}" Height="{Binding ActualHeight, ElementName=PreviewImage}" HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False" Visibility="{Binding IsGuidesVisible, ElementName=Root, Converter={StaticResource BoolToVisibility}}">
                             <Grid>
                                 <Rectangle StrokeThickness="2" StrokeDashArray="4 3" Fill="Transparent" Stroke="{StaticResource Brush_ShadowOverlay}"/>
                                 <Rectangle StrokeThickness="1" StrokeDashArray="4 3" Fill="Transparent" Stroke="{StaticResource Accent_Text}"/>
@@ -50,13 +48,13 @@
                     </Grid>
                 </Border>
 
-                <Border Grid.Row="0" Width="26" Height="26" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,10,10,0" CornerRadius="4" Cursor="Hand" MouseLeftButtonUp="BtnGuides_MouseLeftButtonUp">
+                <Border Grid.Row="0" Width="26" Height="26" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,5,5,0" CornerRadius="4" Cursor="Hand" MouseLeftButtonUp="BtnGuides_MouseLeftButtonUp">
                     <Border.Style>
                         <Style TargetType="Border">
                             <Setter Property="Background" Value="#28000000"/>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding IsGuidesVisible, ElementName=Root}" Value="True">
-                                    <Setter Property="Background" Value="#60A29BFE"/>
+                                    <Setter Property="Background" Value="{StaticResource Brush_ShadowOverlay}"/>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
@@ -84,18 +82,18 @@
                     </Grid.ColumnDefinitions>
 
                     <StackPanel Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Left">
-                        <TextBlock Text="{DynamicResource label_Designed}" Foreground="{StaticResource Inactive_Text}" FontSize="11" LineHeight="16" LineStackingStrategy="BlockLineHeight"/>
-                        <TextBlock Text="{Binding DesignedSizeText, ElementName=Root}" Foreground="{StaticResource Primary_Accent_Text}" FontSize="13" Margin="0,4,0,0"/>
+                        <TextBlock Text="{DynamicResource label_Designed}" Foreground="{StaticResource Inactive_Text}" FontSize="11" LineHeight="16" LineStackingStrategy="BlockLineHeight" TextTrimming="CharacterEllipsis"/>
+                        <TextBlock Text="{Binding DesignedSizeText, ElementName=Root, FallbackValue='0 x 0'}" Foreground="{StaticResource Primary_Accent_Text}" FontSize="13" Margin="0,4,0,0" TextTrimming="CharacterEllipsis"/>
                     </StackPanel>
 
                     <StackPanel Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Center">
-                        <TextBlock Text="ViewBox" Foreground="{StaticResource Inactive_Text}" FontSize="11" HorizontalAlignment="Center"  LineHeight="16" LineStackingStrategy="BlockLineHeight"/>
-                        <TextBlock Text="{Binding ViewBoxText, ElementName=Root}" Foreground="{StaticResource Primary_Accent_Text}" FontSize="13" HorizontalAlignment="Center" Margin="0,4,0,0"/>
+                        <TextBlock Text="ViewBox" Foreground="{StaticResource Inactive_Text}" FontSize="11" HorizontalAlignment="Center"  LineHeight="16" LineStackingStrategy="BlockLineHeight" TextTrimming="CharacterEllipsis"/>
+                        <TextBlock Text="{Binding ViewBoxText, ElementName=Root, FallbackValue='0 0 0 0'}" Foreground="{StaticResource Primary_Accent_Text}" FontSize="13" HorizontalAlignment="Center" Margin="0,4,0,0" TextTrimming="CharacterEllipsis"/>
                     </StackPanel>
 
                     <StackPanel Grid.Column="2" VerticalAlignment="Top" HorizontalAlignment="Center">
-                        <TextBlock Text="{DynamicResource label_ActualSize}" Foreground="{StaticResource Inactive_Text}" FontSize="11" HorizontalAlignment="Center" LineHeight="16" LineStackingStrategy="BlockLineHeight"/>
-                        <TextBlock Foreground="{StaticResource Primary_Accent_Text}" FontSize="13" HorizontalAlignment="Center" Margin="0,4,0,0">
+                        <TextBlock Text="{DynamicResource label_ActualSize}" Foreground="{StaticResource Inactive_Text}" FontSize="11" HorizontalAlignment="Center" LineHeight="16" LineStackingStrategy="BlockLineHeight" TextTrimming="CharacterEllipsis"/>
+                        <TextBlock Foreground="{StaticResource Primary_Accent_Text}" FontSize="13" HorizontalAlignment="Center" Margin="0,4,0,0" TextTrimming="CharacterEllipsis">
                             <TextBlock.Text>
                                 <MultiBinding StringFormat="{}{0:0} x {1:0}">
                                     <Binding Path="ActualWidth" ElementName="PreviewImage"/>
@@ -106,9 +104,9 @@
                     </StackPanel>
 
                     <StackPanel Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Top" MouseLeftButtonUp="StretchToggle_MouseLeftButtonUp" Background="Transparent" Cursor="Hand">
-                        <TextBlock Text="{DynamicResource label_Stretch}" Foreground="{StaticResource Inactive_Text}" FontSize="11" HorizontalAlignment="Right" LineHeight="16" LineStackingStrategy="BlockLineHeight"/>
+                        <TextBlock Text="{DynamicResource label_Stretch}" Foreground="{StaticResource Inactive_Text}" FontSize="11" HorizontalAlignment="Right" LineHeight="16" LineStackingStrategy="BlockLineHeight" TextTrimming="CharacterEllipsis"/>
                         <Border x:Name="StretchToggle" Margin="0,4,0,0" Background="Transparent">
-                            <TextBlock Text="{Binding ImageStretch, ElementName=Root}" Foreground="{StaticResource Accent_Text}" FontSize="13" HorizontalAlignment="Right" TextDecorations="Underline"/>
+                            <TextBlock Text="{Binding ImageStretch, ElementName=Root, FallbackValue='None'}" Foreground="{StaticResource Accent_Text}" FontSize="13" HorizontalAlignment="Right" TextDecorations="Underline" TextTrimming="CharacterEllipsis"/>
                         </Border>
                     </StackPanel>
                 </Grid>
@@ -158,6 +156,21 @@
                     </Border.RenderTransform>
                     <TextBlock Text="{StaticResource toast_Copy}" Foreground="{StaticResource Primary_Accent_Text}" FontSize="12" VerticalAlignment="Center"/>
                 </Border>
+            </Grid>
+
+            <Grid Grid.ColumnSpan="3" d:Visibility="Collapsed" Visibility="{Binding IsError, ElementName=Root, Converter={StaticResource BoolToVisibility}}" Background="{StaticResource Background_Main}">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Image Width="200" Height="auto" HorizontalAlignment="Center" Margin="20,0,0,0">
+                        <Image.Style>
+                            <Style TargetType="{x:Type Image}">
+                                <Setter Property="Source" Value="{StaticResource Icon_File_Damaged}"/>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+                    <TextBlock Text="{DynamicResource title_FileDamaged}" Foreground="{StaticResource Accent_Text}" FontSize="20" TextWrapping="Wrap" TextTrimming="WordEllipsis" TextAlignment="Center" HorizontalAlignment="Center" Margin="0,20,0,10"/>
+                    <TextBlock Text="{DynamicResource label_ConversionError}" Foreground="{StaticResource Primary_Accent_Text}" FontSize="17" TextWrapping="Wrap" TextTrimming="WordEllipsis" TextAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,5"/>
+                    <TextBlock Text="{DynamicResource desc_FileDamaged}" Foreground="{StaticResource Inactive_Text}" FontSize="15" TextWrapping="Wrap" TextTrimming="WordEllipsis" TextAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0"/>
+                </StackPanel>
             </Grid>
         </Grid>
     </Border>

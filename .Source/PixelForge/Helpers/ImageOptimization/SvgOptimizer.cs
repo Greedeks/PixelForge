@@ -42,7 +42,7 @@ namespace PixelForge.Helpers.ImageOptimization
 
         private static readonly Regex MetadataBlockText = new(@"<metadata\b[^>]*>[\s\S]*?</metadata>", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
-        private static readonly Regex CommentText = new(@"", RegexOptions.Compiled);
+        private static readonly Regex CommentText = new(@"<!--[\s\S]*?-->", RegexOptions.Compiled);
 
         private static readonly Regex AttributeInnerWhitespace = new(@"\s+", RegexOptions.Compiled);
 

@@ -1,9 +1,7 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.IO;
 using System.Windows.Input;
-using Ookii.Dialogs.Wpf;
 using PixelForge.Core.Base;
 using PixelForge.Core.Model;
 using PixelForge.Core.Providers.Images;
@@ -17,8 +15,7 @@ namespace PixelForge.Core.ViewModel
 {
     internal class OptimizerViewModel : ViewModelBase
     {
-        private static readonly HashSet<string> SupportedExtensions = new(StringComparer.OrdinalIgnoreCase) { ".png", ".jpg", ".jpeg", ".webp", ".svg" };
-
+        private readonly SemaphoreSlim semaphoreSlim = new(Math.Max(2, Environment.ProcessorCount / 2));
         public ObservableCollection<FileCardModel> Cards { get; } = [];
 
         public bool HasFiles => Cards.Count > 0;
@@ -65,10 +62,15 @@ namespace PixelForge.Core.ViewModel
         public OptimizerViewModel()
         {
             AddFilesCommand = new RelayCommand(_ => AddFiles());
-            ProcessAllCommand = new RelayCommand(async _ => await ProcessAllAsync(), _ => Cards.Any(c => !c.IsDone && !c.IsProcessing));
+            ProcessAllCommand = new RelayCommand(async _ => await ProcessAll(), _ => Cards.Any(c => !c.IsDone && !c.IsProcessing));
             SaveAllCommand = new RelayCommand(_ => SaveAll(), _ => HasFiles && Cards.Any(c => c.IsDone && !c.IsSaved));
             ClearAllCommand = new RelayCommand(_ =>
             {
+                foreach (FileCardModel card in Cards)
+                {
+                    card.PropertyChanged -= OnCardPropertyChanged;
+                }
+
                 Cards.Clear();
                 RaiseStatsChanged();
                 OnPropertyChanged(nameof(HasFiles));
@@ -78,7 +80,7 @@ namespace PixelForge.Core.ViewModel
             {
                 if (p is FileCardModel card)
                 {
-                    await ProcessOneAsync(card);
+                    await ProcessOne(card);
                 }
             }, p => p is FileCardModel c && !c.IsDone && !c.IsProcessing);
             SaveCardCommand = new RelayCommand(p =>
@@ -129,54 +131,30 @@ namespace PixelForge.Core.ViewModel
 
         private void AddFiles()
         {
-            VistaOpenFileDialog dialog = new()
+            string[] paths = FileImportService.ImportFiles("Images|*.png;*.jpg;*.jpeg;*.webp;*.svg");
+            if (paths.Length > 0)
             {
-                Multiselect = true,
-                Filter = "Images|*.png;*.jpg;*.jpeg;*.webp;*.svg"
-            };
-
-            if (dialog.ShowDialog() == true)
-            {
-                AddPaths(dialog.FileNames);
+                AddPaths(paths);
             }
         }
 
         public void AddPaths(IEnumerable<string> paths)
         {
-            foreach (string path in paths)
+            foreach (string path in FileImportService.ExpandToSupportedFiles(paths, true, ".png", ".jpg", ".jpeg", ".webp", ".svg"))
             {
-                if (Directory.Exists(path))
-                {
-                    AddPaths(Directory.GetFiles(path));
-                    continue;
-                }
-
-                if (!File.Exists(path))
+                if (Cards.Any(c => c.Model.Source is ResourceImageSource f && f.Path == path))
                 {
                     continue;
                 }
 
-                if (!SupportedExtensions.Contains(Path.GetExtension(path)))
+                IImageSource source;
+                try
+                {
+                    source = FileImportService.CreateSource(path);
+                }
+                catch
                 {
                     continue;
-                }
-
-                if (Cards.Any(c => c.Model.Source?.Name == Path.GetFileName(path) && c.Model.Source is ResourceImageSource f && f.Path == path))
-                {
-                    continue;
-                }
-
-                IImageSource? source;
-                if (IsTemporaryPath(path))
-                {
-                    byte[] bytes;
-                    try { bytes = File.ReadAllBytes(path); }
-                    catch { continue; }
-                    source = new MemoryImageSource(Path.GetFileName(path), bytes);
-                }
-                else
-                {
-                    source = new ResourceImageSource(path);
                 }
 
                 OptimizerModel model = new()
@@ -203,49 +181,39 @@ namespace PixelForge.Core.ViewModel
             CommandManager.InvalidateRequerySuggested();
         }
 
-        private async Task ProcessOneAsync(FileCardModel card)
+        private async Task ProcessOne(FileCardModel card)
         {
-            card.HasError = false;
-            card.IsDone = false;
-            card.IsProcessing = true;
+            await semaphoreSlim.WaitAsync();
 
             try
             {
+                card.HasError = false;
+                card.IsDone = false;
+                card.IsProcessing = true;
+
                 OptimizationResult result = await Task.Run(() => ImageOptimizer.Optimize(card.Model.Source));
                 card.ApplyResult(result);
             }
             catch (Exception ex)
             {
                 card.HasError = true;
-                MessageWindowManager.ShowOptimizeError(ex);
+                MessageManager.ShowOptimizeError(ex);
             }
             finally
             {
                 card.IsProcessing = false;
+                semaphoreSlim.Release();
+
                 RaiseStatsChanged();
                 CommandManager.InvalidateRequerySuggested();
             }
         }
 
 
-        private async Task ProcessAllAsync()
+        private async Task ProcessAll()
         {
-            int maxParallelism = Math.Max(2, Environment.ProcessorCount / 2);
             List<FileCardModel> toProcess = [.. Cards.Where(c => !c.IsDone)];
-
-            using SemaphoreSlim sem = new(maxParallelism);
-            await Task.WhenAll(toProcess.Select(async card =>
-            {
-                await sem.WaitAsync();
-                try
-                {
-                    if (Cards.Contains(card))
-                    {
-                        await ProcessOneAsync(card);
-                    }
-                }
-                finally { sem.Release(); }
-            }));
+            await Task.WhenAll(toProcess.Where(Cards.Contains).Select(ProcessOne));
         }
 
         private void SaveAll()
@@ -264,13 +232,13 @@ namespace PixelForge.Core.ViewModel
 
             if (errors.Count > 0)
             {
-                MessageWindowManager.ShowErrors(errors.Select(e => new Exception(e.FileName, e.Ex)), MessageWindowType.ErrorSave);
+                MessageManager.ShowErrors(errors.Select(e => new Exception(e.FileName, e.Ex)), MessageWindowType.ErrorSave);
             }
 
             CommandManager.InvalidateRequerySuggested();
         }
 
-        private string? SaveOne(FileCardModel card)
+        private static string? SaveOne(FileCardModel card)
         {
             if (card.Model.OptimizationResult is null)
             {
@@ -285,15 +253,9 @@ namespace PixelForge.Core.ViewModel
             }
             catch (Exception ex)
             {
-                MessageWindowManager.ShowSaveError(ex);
+                MessageManager.ShowSaveError(ex);
                 return null;
             }
-        }
-
-        private static bool IsTemporaryPath(string path)
-        {
-            string temp = Path.GetTempPath().TrimEnd(Path.DirectorySeparatorChar);
-            return path.StartsWith(temp, StringComparison.OrdinalIgnoreCase);
         }
 
         private void RaiseStatsChanged()

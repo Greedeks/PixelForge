@@ -52,7 +52,7 @@
                             <Binding Path="Thumbnail" ElementName="Root"/>
                         </MultiBinding>
                     </Border.Background>
-                    <Image Source="{Binding Thumbnail, ElementName=Root}" Stretch="UniformToFill"/>
+                    <Image Source="{Binding Thumbnail, ElementName=Root, TargetNullValue={StaticResource Icon_Image_Damaged}}" Stretch="UniformToFill"/>
                 </Border>
 
                 <StackPanel Grid.Column="1" Margin="10,0" VerticalAlignment="Center">
@@ -138,7 +138,7 @@
                         <Ellipse x:Name="Dot2" Style="{StaticResource LoadingDot}"/>
                         <Ellipse x:Name="Dot3" Style="{StaticResource LoadingDot}"/>
 
-                        <TextBlock Text="{DynamicResource status_Processing}" Foreground="{StaticResource Inactive_Text}" FontSize="11" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                        <TextBlock Text="{DynamicResource stat_Processing}" Foreground="{StaticResource Inactive_Text}" FontSize="11" Margin="6,0,0,0" VerticalAlignment="Center"/>
                     </StackPanel>
 
                     <TextBlock Margin="0,3,0,0">

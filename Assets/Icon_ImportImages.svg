@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?><svg id="_Слой_1" data-name="Слой_1" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 241 187"><defs><style>
+      .st0 {
+        fill: #27ae60;
+      }
+
+      .st1 {
+        fill: none;
+        stroke: #0a0a0a;
+        stroke-linecap: round;
+        stroke-width: 5.5px;
+      }
+
+      .st2 {
+        fill: url(#_Безымянный_градиент_2);
+      }
+
+      .st3 {
+        fill: url(#_Безымянный_градиент);
+      }
+
+      .st4 {
+        fill: url(#_Безымянный_градиент_3);
+      }
+
+      .st5 {
+        fill: #0a0a0a;
+        isolation: isolate;
+        opacity: .5;
+      }
+    </style><linearGradient id="_Безымянный_градиент" data-name="Безымянный градиент" x1="-189" y1="512.89" x2="-188" y2="511.89" gradientTransform="translate(30245 61563) scale(160 -120)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#7d6ff0" /><stop offset="1" stop-color="#5847c9" /></linearGradient><linearGradient id="_Безымянный_градиент_2" data-name="Безымянный градиент 2" x1="-189" y1="512.89" x2="-188" y2="511.89" gradientTransform="translate(30267 61585) scale(160 -120)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8e84f5" /><stop offset="1" stop-color="#6c5ce7" /></linearGradient><linearGradient id="_Безымянный_градиент_3" data-name="Безымянный градиент 3" x1="-189" y1="512.89" x2="-188" y2="511.89" gradientTransform="translate(30289 61607) scale(160 -120)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#a29bfe" /><stop offset="1" stop-color="#7d6ff0" /></linearGradient></defs><rect class="st3" x="4.5" y="16.5" width="160" height="120" rx="12" ry="12" /><rect class="st2" x="26.5" y="38.5" width="160" height="120" rx="12" ry="12" /><rect class="st4" x="48.5" y="60.5" width="160" height="120" rx="12" ry="12" /><circle class="st5" cx="78.5" cy="94.5" r="13" /><path class="st5" d="M56.5,154.5l40-40,25,22,27-28,52,46H56.5Z" /><circle class="st0" cx="210.5" cy="32.5" r="26" /><line class="st1" x1="210.5" y1="19.5" x2="210.5" y2="45.5" /><line class="st1" x1="197.5" y1="32.5" x2="223.5" y2="32.5" /></svg>

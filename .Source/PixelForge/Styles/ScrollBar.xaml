@@ -37,7 +37,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ScrollBar}">
-                    <Grid x:Name="GridRoot" Width="10" Background="{TemplateBinding Background}">
+                    <Grid x:Name="GridRoot" Width="6" Background="{TemplateBinding Background}">
                         <Track x:Name="PART_Track" IsDirectionReversed="true" Focusable="False">
                             <Track.Thumb>
                                 <Thumb x:Name="Thumb" Tag="Vertical" Background="{TemplateBinding Foreground}" Style="{StaticResource ScrollThumbs}"/>
@@ -69,7 +69,7 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type ScrollBar}">
-                            <Grid x:Name="GridRoot" Height="10" Background="{TemplateBinding Background}">
+                            <Grid x:Name="GridRoot" Height="3" Background="{TemplateBinding Background}" VerticalAlignment="Bottom">
                                 <Track x:Name="PART_Track" IsDirectionReversed="False" Focusable="False">
                                     <Track.Thumb>
                                         <Thumb x:Name="Thumb" Tag="Horizontal" Background="{TemplateBinding Foreground}" Style="{StaticResource ScrollThumbs}"/>

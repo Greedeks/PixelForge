@@ -6,7 +6,7 @@ namespace PixelForge.View
 {
     public partial class OptimizerView : UserControl
     {
-        private OptimizerViewModel? _dataVM => DataContext as OptimizerViewModel;
+        private OptimizerViewModel? ViewModel => DataContext as OptimizerViewModel;
 
         public OptimizerView() => InitializeComponent();
 
@@ -20,11 +20,11 @@ namespace PixelForge.View
         {
             if (e.Data.GetData(DataFormats.FileDrop) is string[] paths)
             {
-                _dataVM?.AddPaths(paths);
+                ViewModel?.AddPaths(paths);
             }
         }
 
-        private void OnDropZoneClick(object sender, System.Windows.Input.MouseButtonEventArgs e) => _dataVM?.AddFilesCommand.Execute(null);
+        private void OnDropZoneClick(object sender, System.Windows.Input.MouseButtonEventArgs e) => ViewModel?.AddFilesCommand.Execute(null);
     }
 
 }

@@ -5,13 +5,108 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:uc="clr-namespace:PixelForge.Assets.UserControls"
              xmlns:vm="clr-namespace:PixelForge.Core.ViewModel"
-             xmlns:local="clr-namespace:PixelForge.View"
+             xmlns:conv="clr-namespace:PixelForge.Core.Converters"
              mc:Ignorable="d" Style="{StaticResource LaunchPage}"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             AllowDrop="True" Drop="OnDrop" DragOver="OnDragOver">
     <UserControl.DataContext>
         <vm:SvgToXamlViewModel/>
     </UserControl.DataContext>
-    <Grid>
 
+    <UserControl.Resources>
+        <conv:BoolToVisibilityConverter x:Key="BoolToVisibility"/>
+        <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityInverted" Invert="True"/>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" BorderBrush="{StaticResource Border_Default}" BorderThickness="0,0,0,1" Background="{StaticResource Background_Page}" Height="38" Visibility="{Binding HasFiles, Converter={StaticResource BoolToVisibility}}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <ListBox Grid.Column="0" ItemsSource="{Binding Files}" SelectedItem="{Binding ActiveFile, Mode=TwoWay}" PreviewMouseWheel="ListBox_PreviewMouseWheel" Background="Transparent" BorderThickness="0">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <ContentPresenter/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal"  VerticalAlignment="Center" Margin="4,0,6,0">
+                    <ToggleButton x:Name="TabListToggle" Style="{StaticResource TabMenuToggle}" Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                        <ToggleButton.ContextMenu>
+                            <ContextMenu ItemsSource="{Binding PlacementTarget.Tag.Files, RelativeSource={RelativeSource Self}}">
+                                <ContextMenu.ItemContainerStyle>
+                                    <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                                        <Setter Property="Header" Value="{Binding FileName}"/>
+                                        <Setter Property="Command" Value="{Binding PlacementTarget.Tag.SelectFileCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                        <Setter Property="CommandParameter" Value="{Binding}"/>
+                                    </Style>
+                                </ContextMenu.ItemContainerStyle>
+                            </ContextMenu>
+                        </ToggleButton.ContextMenu>
+                    </ToggleButton>
+
+                    <ToggleButton x:Name="DotsMenuBtn" Style="{StaticResource TabDotsToggle}" Margin="2,0,0,0">
+                        <ToggleButton.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="{DynamicResource menu_OpenFiles}" Command="{Binding PlacementTarget.DataContext.AddFilesCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                <Separator Style="{StaticResource DarkSeparator}"/>
+                                <MenuItem Header="{DynamicResource menu_Close}" Command="{Binding PlacementTarget.DataContext.CloseFileCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding PlacementTarget.DataContext.ActiveFile, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                <MenuItem Header="{DynamicResource menu_CloseToLeft}" Command="{Binding PlacementTarget.DataContext.CloseToLeftCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                <MenuItem Header="{DynamicResource menu_CloseToRight}" Command="{Binding PlacementTarget.DataContext.CloseToRightCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                <MenuItem Header="{DynamicResource menu_CloseOthers}" Command="{Binding PlacementTarget.DataContext.CloseOthersCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                <Separator Style="{StaticResource DarkSeparator}"/>
+                                <MenuItem Header="{DynamicResource menu_CloseAll}" Command="{Binding PlacementTarget.DataContext.CloseAllCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                            </ContextMenu>
+                        </ToggleButton.ContextMenu>
+                    </ToggleButton>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="1" Style="{StaticResource DropZone}" Cursor="Hand" DragOver="OnDragOver" Drop="OnDrop" Visibility="{Binding HasFiles, Converter={StaticResource BoolToVisibilityInverted}}">
+            <Border.InputBindings>
+                <MouseBinding MouseAction="LeftClick" Command="{Binding AddFilesCommand}"/>
+            </Border.InputBindings>
+            <Grid>
+                <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left" Margin="28,24,28,0">
+                    <TextBlock Text="{DynamicResource rbtn_SvgToXaml}" FontSize="26" Foreground="{StaticResource Primary_Accent_Text}" TextWrapping="Wrap"/>
+                    <TextBlock Text="{DynamicResource title_SvgToXaml}" Margin="0,6,0,0" FontSize="14" Foreground="{StaticResource Inactive_Text}" TextWrapping="Wrap"/>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Image Width="Auto" Height="120" HorizontalAlignment="Center" Margin="40,0,0,10" Source="{StaticResource Icon_ImportSVG}"/>
+                    <TextBlock Text="{DynamicResource dropzone_Title_SVG}" FontSize="20" HorizontalAlignment="Center" Foreground="{StaticResource Primary_Accent_Text}" TextWrapping="Wrap" TextAlignment="Center"/>
+                    <TextBlock Text="{DynamicResource dropzone_Sub}" Margin="0,4,0,0" FontSize="15"  HorizontalAlignment="Center" Foreground="{StaticResource Inactive_Text}" TextWrapping="Wrap" TextAlignment="Center"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <ContentControl Grid.Row="1" Content="{Binding ActiveFile}" Visibility="{Binding HasFiles, Converter={StaticResource BoolToVisibility}}">
+            <ContentControl.ContentTemplate>
+                <DataTemplate>
+                    <uc:SvgPreviewControl
+                        DrawingImage="{Binding Result.DrawingImage}"
+                        Thumbnail="{Binding Result.Thumbnail}"
+                        XamlCode="{Binding Result.XamlCode}"
+                        SvgCode="{Binding Result.SvgCode}"
+                        ViewBoxText="{Binding Result.ViewBoxText}"
+                        DesignedSizeText="{Binding Result.DesignedSizeText}"
+                        IsError="{Binding Result.IsError}"/>
+                </DataTemplate>
+            </ContentControl.ContentTemplate>
+        </ContentControl>
     </Grid>
 </UserControl>
